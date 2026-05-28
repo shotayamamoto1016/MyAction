@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
+        // デバッグ用に追加
+        Debug.Log("isGrounded: " + isGrounded);
+
         //GetAxis ではなく GetAxisRaw を使う
         float moveInput = Input.GetAxisRaw("Horizontal");
 
