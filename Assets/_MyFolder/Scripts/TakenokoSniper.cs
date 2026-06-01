@@ -34,10 +34,10 @@ public class TakenokoSniper : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Transform player;
-    private bool isEmerged = false;
-    private bool isEmerging = false;
-    private bool isShooting = false;
-    private bool isSpiking = false;
+    //private bool isEmerged = false;
+    //private bool isEmerging = false;
+    //private bool isShooting = false;
+    //private bool isSpiking = false;
     private float shootTimer = 0f;
 
     private Vector3 hidePosition;
