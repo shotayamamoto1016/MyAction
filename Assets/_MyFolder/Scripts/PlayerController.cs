@@ -1,3 +1,5 @@
+using DG.Tweening.Core.Easing;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,10 +13,15 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;     //足元の判定ポイント
     public float checkRadius = 0.2f;  //地面判定の範囲
 
+    [Header("死亡時用画像")]
+    public Sprite deathSprite;
+
     private Rigidbody2D rb;
     private Animator anim; // アニメーター用
     private bool isGrounded;
     private bool facingRight = true;
+
+    public bool isDead = false;
 
     void Start()
     {
@@ -25,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // 死んでいる間は以下の操作を全て無視する
+        if (isDead) return;
+
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
         // デバッグ用に追加
@@ -73,5 +83,53 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
         }
+    }
+
+    public void Die()
+    {
+        if (isDead) return;
+        StartCoroutine(DeathAnimation());
+    }
+
+    IEnumerator DeathAnimation()
+    {
+        isDead = true;
+
+        // 画像を死んだ時のものに変える
+        if (deathSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = deathSprite;
+        }
+
+        // 物理と当たり判定を無効化
+        rb.linearVelocity = Vector2.zero;
+        GetComponent<Collider2D>().enabled = false;
+
+        // アニメーションを止める
+        if (anim != null)
+        {
+            anim.enabled = false;
+        }
+            
+
+        // 上にピョーンと跳ねる
+        rb.AddForce(Vector2.up * 12f, ForceMode2D.Impulse);
+
+        // GameManagerに通知
+        GameManager.instance.OnPlayerDie();
+
+        yield return null;
+    }
+
+    // 復活時にGameManagerから呼ばれる
+    public void ResetPlayer()
+    {
+        isDead = false;
+        GetComponent<Collider2D>().enabled = true;
+        anim.enabled = true;
+        // Animatorを再起動
+        anim.Play("Ponta_Idle", 0, 0);
+        rb.linearVelocity = Vector2.zero;
+        // 必要なら、ここで「待機ポーズ」のアニメに強制的に戻す
     }
 }
