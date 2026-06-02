@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GoalDoor : MonoBehaviour
 {
-    [Header("扉アニメーション（4枚）")]
+    [Header("扉アニメーション")]
     public Sprite[] doorSprites;
     public float doorAnimInterval = 0.1f;
 
