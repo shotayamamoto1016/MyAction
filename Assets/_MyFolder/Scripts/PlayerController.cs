@@ -132,4 +132,35 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         // 必要なら、ここで「待機ポーズ」のアニメに強制的に戻す
     }
+
+    // 敵に触れた時の判定
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isDead) return; // すでに死んでいたら何もしない
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // 提灯などの「踏める敵」の場合、上から踏んだ時は死なないようにする判定
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                // 下からの衝撃なら死亡
+                if (contact.normal.y < 0.5f)
+                {
+                    Die();
+                    return;
+                }
+            }
+        }
+    }
+
+    // 弾に触れた時の判定
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isDead) return;
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Die();
+        }
+    }
 }

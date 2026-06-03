@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
     public CanvasGroup fadeCanvasGroup;
     public TextMeshProUGUI lifeText;
     public GameObject lifeUI;        // 残機を表示するUI
+
+    [Header("カメラ設定")]
+    public CinemachineCamera vcam;
+    public float cameraVerticalOffset = 1.5f;
 
     // 初回起動かどうかの判定フラグ 
     private bool isFirstLoad = true;
@@ -103,26 +108,40 @@ public class GameManager : MonoBehaviour
 
     void Respawn()
     {
-        // 【修正ポイント】まだ黒いパネル(fadePanel)は消さない！
         if (lifeUI != null) lifeUI.SetActive(false);
 
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
-            if (CheckpointManager.instance.HasCheckpoint())
+            Vector3 targetPos;
+            if (CheckpointManager.instance != null && CheckpointManager.instance.HasCheckpoint())
             {
-                // チェックポイントへワープ
-                player.transform.position = CheckpointManager.instance.GetCheckpointPosition();
-                player.GetComponent<PlayerController>().ResetPlayer();
-
-                StartCoroutine(Fade(0));
+                targetPos = CheckpointManager.instance.GetCheckpointPosition();
             }
             else
             {
-                // シーンを最初から読み直す場合
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                // ※シーンを読み直す場合は、Start()の中でfadePanelを消す処理が必要になります
+                return;
             }
+
+            // ぽんたをワープさせる
+            player.transform.position = targetPos;
+            player.GetComponent<PlayerController>().ResetPlayer();
+
+            // ワープ処理
+            if (vcam != null)
+            {
+
+                // ぽんたの座標に、少し高さを足した位置にカメラを飛ばす
+                Vector3 cameraTargetPos = targetPos + Vector3.up * cameraVerticalOffset;
+
+                vcam.OnTargetObjectWarped(player.transform, targetPos - player.transform.position);
+
+                // 高さを補正した位置にカメラを強制移動
+                vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+            }
+
+            StartCoroutine(Fade(0));
         }
     }
 

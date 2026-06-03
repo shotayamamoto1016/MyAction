@@ -106,7 +106,13 @@ public class Koromochi : MonoBehaviour
 
     void PlayerDie(GameObject player)
     {
-        player.SetActive(false);
+        PlayerController controller = player.GetComponent<PlayerController>();
+
+        if (controller != null)
+        {
+            // ‚Û‚ñ‚½‚Ì€–S‰‰o‚ğŒÄ‚Ô
+            controller.Die();
+        }
     }
 
     void GetStomp()

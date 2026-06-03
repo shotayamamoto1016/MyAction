@@ -257,8 +257,11 @@ public class TakenokoSniper : MonoBehaviour
             }
             else
             {
-                // ‰¡‚©‚ç“–‚½‚Á‚½ ¨ ‚Û‚ñ‚½€–S
-                collision.gameObject.SetActive(false);
+                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+                if (player != null)
+                {
+                    player.Die(); // ‚Û‚ñ‚½‚Ì€–S‰‰o‚ğŒÄ‚Ño‚·
+                }
                 return;
             }
         }

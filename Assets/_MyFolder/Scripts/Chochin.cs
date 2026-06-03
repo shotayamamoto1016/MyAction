@@ -146,11 +146,11 @@ public class Chochin : MonoBehaviour
 
     void KillPlayer(GameObject playerObj)
     {
-        // ぽんたを非表示にする（または死亡演出へ）
-        playerObj.SetActive(false);
-        Debug.Log("ぽんたが提灯にやられた！");
-
-        // ここでリスタート処理などを呼ぶとゲームらしくなります
+        PlayerController player = playerObj.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            player.Die(); // ぽんたの死亡演出を呼び出す
+        }
     }
 
     IEnumerator AscendAnimation()
