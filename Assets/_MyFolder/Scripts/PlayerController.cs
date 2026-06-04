@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [Header("凍る画像")]
     public Sprite freezeSprite;
 
+    [Header("毒画像")]
+    public Sprite poisonSprite;
+
     private Rigidbody2D rb;
     private Animator anim; // アニメーター用
     private bool isGrounded;
@@ -198,6 +201,51 @@ public class PlayerController : MonoBehaviour
 
         // 凍った状態で待機
         yield return new WaitForSeconds(freezeDuration);
+
+        // 死亡画像に変更
+        if (deathSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = deathSprite;
+        }
+
+        // Colliderを無効化
+        GetComponent<Collider2D>().enabled = false;
+
+        // 跳ねずにGameManagerに通知
+        GameManager.instance.OnPlayerDie();
+    }
+
+    public void PoisonAndDie(float poisonDuration)
+    {
+        if (isDead) return;
+        StartCoroutine(PoisonDeathSequence(poisonDuration));
+    }
+
+    IEnumerator PoisonDeathSequence(float poisonDuration)
+    {
+        isDead = true;
+
+        // 移動を止める
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        // アニメーターを無効化
+        if (anim != null) anim.enabled = false;
+
+        // 毒画像に変更
+        if (poisonSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = poisonSprite;
+        }
+
+        // 少し上にずらす
+        transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y + 0.7f,
+            transform.position.z);
+
+        // 毒状態で待機
+        yield return new WaitForSeconds(poisonDuration);
 
         // 死亡画像に変更
         if (deathSprite != null)
