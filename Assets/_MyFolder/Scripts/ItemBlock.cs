@@ -12,7 +12,7 @@ public class ItemBlock : MonoBehaviour
     public enum ItemType
     {
         Freeze,     // 凍るキノコ
-        Speed,      // スピードが下がるキノコ
+        Confused,      // 混乱するキノコ
         Shrink,     // 小さくなるキノコ
         Poison,     // 毒キノコ
     }
@@ -23,7 +23,7 @@ public class ItemBlock : MonoBehaviour
 
     [Header("各アイテムのPrefab")]
     public GameObject freezeMushroomPrefab;
-    public GameObject speedMushroomPrefab;
+    public GameObject confusedMushroomPrefab;
     public GameObject shrinkMushroomPrefab;
     public GameObject poisonMushroomPrefab;
 
@@ -99,8 +99,8 @@ public class ItemBlock : MonoBehaviour
         {
             case ItemType.Freeze:
                 return freezeMushroomPrefab;
-            case ItemType.Speed:
-                return speedMushroomPrefab;
+            case ItemType.Confused:
+                return confusedMushroomPrefab;
             case ItemType.Shrink:
                 return shrinkMushroomPrefab;
             case ItemType.Poison:

@@ -22,6 +22,15 @@ public class PlayerController : MonoBehaviour
     [Header("毒画像")]
     public Sprite poisonSprite;
 
+    [Header("混乱時の画像")]
+    public Sprite confusedWalkSprite;  // 混乱歩き画像
+    public Sprite confusedJumpSprite;  // 混乱ジャンプ画像
+    public Sprite confusedIdleSprite;  // 混乱待機画像
+
+    // 混乱フラグ
+    public bool isConfused = false;
+    private float confusedTimer = 0f;
+
     private Rigidbody2D rb;
     private Animator anim; // アニメーター用
     private bool isGrounded;
@@ -55,14 +64,46 @@ public class PlayerController : MonoBehaviour
             moveInput = 0;
         }
 
+        // 混乱中は左右反転
+        if (isConfused)
+        {
+            moveInput = -moveInput;
+
+            // 混乱タイマー
+            confusedTimer -= Time.deltaTime;
+            if (confusedTimer <= 0f)
+            {
+                StopConfused();
+            }
+
+            // 混乱中のアニメーション管理
+           // UpdateConfusedAnimation(moveInput);
+        }
+
+        //else
+        //{
+        //    // 通常のアニメーション
+        //    float speed = Mathf.Abs(moveInput) > 0.1f ? Mathf.Abs(moveInput) : 0f;
+        //    anim.SetFloat("Speed", speed);
+        //    anim.SetBool("isGrounded", isGrounded);
+        //}
+
+
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        float speed = Mathf.Abs(moveInput) > 0.1f ? Mathf.Abs(moveInput) : 0f;
-        anim.SetFloat("Speed", speed);
+        if (anim != null && anim.enabled)
+        {
+            anim.SetBool("isGrounded", isGrounded);
+            anim.SetFloat("Speed", Mathf.Abs(moveInput));
+            anim.SetBool("isConfused", isConfused); // Animatorに混乱中か伝える
+        }
 
-        anim.SetBool("isGrounded", isGrounded);
+        //float speed = Mathf.Abs(moveInput) > 0.1f ? Mathf.Abs(moveInput) : 0f;
+        //anim.SetFloat("Speed", speed);
 
-       
+        //anim.SetBool("isGrounded", isGrounded);
+
+
         if (moveInput > 0 && !facingRight) Flip();
         else if (moveInput < 0 && facingRight) Flip();
 
@@ -258,5 +299,66 @@ public class PlayerController : MonoBehaviour
 
         // 跳ねずにGameManagerに通知
         GameManager.instance.OnPlayerDie();
+    }
+
+    // 混乱中のアニメーション管理
+    
+　　　void UpdateConfusedAnimation(float moveInput)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if (!isGrounded)
+        {
+            // ジャンプ中→ジャンプ画像
+            if (confusedJumpSprite != null)
+                sr.sprite = confusedJumpSprite;
+        }
+        else if (Mathf.Abs(moveInput) > 0.1f)
+        {
+            // 歩き中→混乱アニメーター
+            if (anim != null)
+            {
+                anim.enabled = true;
+                anim.Play("Ponta_Confused_Walk");
+            }
+        }
+        else
+        {
+            // 待機中→気を付け画像
+            if (anim != null) anim.enabled = false;
+            if (confusedIdleSprite != null)
+                sr.sprite = confusedIdleSprite;
+        }
+    }
+
+    // 混乱開始
+    public void StartConfused(float duration)
+    {
+        isConfused = true;
+        confusedTimer = duration;
+
+        // アニメーターを混乱用に切り替え
+        if (anim != null)
+        {
+            //anim.enabled = true;
+
+            anim.SetBool("isConfused", true);
+        }
+    }
+
+    // 混乱終了
+    void StopConfused()
+    {
+        isConfused = false;
+        if (anim != null) anim.SetBool("isConfused", false);
+        //confusedTimer = 0f;
+
+        //// 通常アニメーターに戻す
+        //SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        //if (anim != null)
+        //{
+        //    anim.enabled = true;
+        //    anim.Play("Ponta_Idle");
+        //}
     }
 }
