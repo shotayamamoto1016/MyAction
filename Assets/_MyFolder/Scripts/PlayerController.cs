@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [Header("死亡時用画像")]
     public Sprite deathSprite;
 
+    [Header("凍る画像")]
+    public Sprite freezeSprite;
+
     private Rigidbody2D rb;
     private Animator anim; // アニメーター用
     private bool isGrounded;
@@ -162,5 +165,50 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void FreezeAndDie(float freezeDuration)
+    {
+        if (isDead) return;
+        StartCoroutine(FreezeDeathSequence(freezeDuration));
+    }
+
+    IEnumerator FreezeDeathSequence(float freezeDuration)
+    {
+        isDead = true;
+
+        // 移動を止める
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        // アニメーターを無効化
+        if (anim != null) anim.enabled = false;
+
+        // 凍る画像に変更
+        if (freezeSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = freezeSprite;
+        }
+
+        // 少し上にずらす 
+        transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y + 0.5f, 
+            transform.position.z);
+
+        // 凍った状態で待機
+        yield return new WaitForSeconds(freezeDuration);
+
+        // 死亡画像に変更
+        if (deathSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = deathSprite;
+        }
+
+        // Colliderを無効化
+        GetComponent<Collider2D>().enabled = false;
+
+        // 跳ねずにGameManagerに通知
+        GameManager.instance.OnPlayerDie();
     }
 }
