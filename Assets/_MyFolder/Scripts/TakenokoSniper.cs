@@ -260,6 +260,13 @@ public class TakenokoSniper : MonoBehaviour
                 PlayerController player = collision.gameObject.GetComponent<PlayerController>();
                 if (player != null)
                 {
+                    if (player.isInvincible)
+                    {
+                        Debug.Log("ぽんたが無敵なので、敵側で自爆処理を実行");
+                         // 踏まれた時と同じ演出で消える
+                        return;
+                    }
+
                     player.Die(); // ぽんたの死亡演出を呼び出す
                 }
                 return;

@@ -82,6 +82,9 @@ public class Koromochi : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player")) return;
         if (isDead) return;
 
+        PlayerController controller = collision.gameObject.GetComponent<PlayerController>();
+        if (controller == null) return;
+
         foreach (ContactPoint2D contact in collision.contacts)
         {
             if (contact.normal.y < -0.5f)
@@ -98,8 +101,19 @@ public class Koromochi : MonoBehaviour
             }
             else
             {
-                PlayerDie(collision.gameObject);
-                return;
+                // ‰¡‚©‚ç“–‚½‚Á‚½
+                if (controller.isInvincible)
+                {
+                    // –³“G’†‚Í“G‚ªŽ€‚Ê
+                    GetStomp();
+                    return;
+                }
+                else
+                {
+                    // ’ÊíŽž‚Í‚Û‚ñ‚½‚ªŽ€‚Ê
+                    PlayerDie(collision.gameObject);
+                    return;
+                }
             }
         }
     }
@@ -110,6 +124,13 @@ public class Koromochi : MonoBehaviour
 
         if (controller != null)
         {
+            if (controller.isInvincible)
+            {
+                Debug.Log("‚Û‚ñ‚½‚ª–³“G‚È‚Ì‚ÅA“G‘¤‚ÅŽ©”šˆ—‚ðŽÀs");
+                GetStomp(); // “¥‚Ü‚ê‚½Žž‚Æ“¯‚¶‰‰o‚ÅÁ‚¦‚é
+                return;
+            }
+
             // ‚Û‚ñ‚½‚ÌŽ€–S‰‰o‚ðŒÄ‚Ô
             controller.Die();
         }

@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     public Sprite confusedJumpSprite;  // 混乱ジャンプ画像
     public Sprite confusedIdleSprite;  // 混乱待機画像
 
+    [Header("無敵モード設定")]
+    public bool isInvincible = false;
+    public float invincibilityDuration = 15f;
+    public GameObject sparkleEffectPrefab;
+
     // 混乱フラグ
     public bool isConfused = false;
     private float confusedTimer = 0f;
@@ -38,12 +43,22 @@ public class PlayerController : MonoBehaviour
 
     public bool isDead = false;
 
+    //private float originalMoveSpeed;
+    //private float originalJumpForce;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
         anim = GetComponent<Animator>(); // 開始時にAnimatorを取得
+
+        // 元の値を保存
+        //originalMoveSpeed = moveSpeed;
+        //originalJumpForce = jumpForce;
     }
+
+    
 
     void Update()
     {
@@ -134,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        if (isDead) return;
+        if (isDead ) return;
         StartCoroutine(DeathAnimation());
     }
 
@@ -187,15 +202,25 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // 提灯などの「踏める敵」の場合、上から踏んだ時は死なないようにする判定
-            foreach (ContactPoint2D contact in collision.contacts)
+            if (isInvincible)
             {
-                // 下からの衝撃なら死亡
-                if (contact.normal.y < 0.5f)
+                // 無敵なら敵を即死させる
+                Destroy(collision.gameObject);
+                Debug.Log("無敵パワーで敵を倒した！");
+                return;
+            }
+            else
+            {
+                // 通常時は上から踏んだか判定
+                foreach (ContactPoint2D contact in collision.contacts)
                 {
-                    Die();
-                    return;
+                    if (contact.normal.y > 0.5f)
+                    {  
+                        return;
+                    }
                 }
+
+                Die();
             }
         }
     }
@@ -207,7 +232,17 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Die();
+            if (isInvincible)
+            {
+                // トリガー接触した敵（弾など）も消滅させる
+                Destroy(collision.gameObject);
+                Debug.Log("無敵パワーでトリガー接触した敵を倒した！");
+            }
+            else
+            {
+                // 即死
+                Die();
+            }
         }
     }
 
@@ -361,4 +396,48 @@ public class PlayerController : MonoBehaviour
         //    anim.Play("Ponta_Idle");
         //}
     }
+
+    // 金色キノコを取った時に呼ばれる
+    public void StartInvincibility()
+    {
+        // すでに無敵なら一度リセットして時間を上書き
+        StopCoroutine("InvincibilityRoutine");
+        StartCoroutine("InvincibilityRoutine");
+    }
+
+    IEnumerator InvincibilityRoutine()
+    {
+        isInvincible = true;
+        moveSpeed = 6.0f;
+        jumpForce = 17.5f;
+
+        // キラキラエフェクトを表示（ぽんたの子オブジェクトとして生成）
+        GameObject sparkles = null;
+        if (sparkleEffectPrefab != null)
+        {
+            sparkles = Instantiate(sparkleEffectPrefab, transform.position, Quaternion.identity, transform);
+        }
+
+        // 無敵中の演出：ぽんたをチカチカさせる、または金色っぽくする
+        float timer = 0;
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        while (timer < invincibilityDuration)
+        {
+            timer += Time.deltaTime;
+
+            // 無敵中の色変化
+            float lerp = Mathf.PingPong(Time.time * 15f, 1f);
+            sr.color = Color.Lerp(Color.white, new Color(1f, 0.9f, 0f), lerp);
+            yield return null;
+        }
+
+        // 元に戻す
+        sr.color = Color.white;
+        isInvincible = false;
+        moveSpeed = 4.5f; // 元の速度に戻す
+        jumpForce = 15.0f; // 元のジャンプ力に戻す
+        if (sparkles != null) Destroy(sparkles);
+    }
+
+   
 }

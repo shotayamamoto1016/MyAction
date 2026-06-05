@@ -13,7 +13,7 @@ public class ItemBlock : MonoBehaviour
     {
         Freeze,     // 凍るキノコ
         Confused,      // 混乱するキノコ
-        Shrink,     // 小さくなるキノコ
+        Golden,     // 小さくなるキノコ
         Poison,     // 毒キノコ
     }
 
@@ -24,7 +24,7 @@ public class ItemBlock : MonoBehaviour
     [Header("各アイテムのPrefab")]
     public GameObject freezeMushroomPrefab;
     public GameObject confusedMushroomPrefab;
-    public GameObject shrinkMushroomPrefab;
+    public GameObject GoldenMushroom;
     public GameObject poisonMushroomPrefab;
 
     private bool isUsed = false;
@@ -101,8 +101,8 @@ public class ItemBlock : MonoBehaviour
                 return freezeMushroomPrefab;
             case ItemType.Confused:
                 return confusedMushroomPrefab;
-            case ItemType.Shrink:
-                return shrinkMushroomPrefab;
+            case ItemType.Golden:
+                return GoldenMushroom;
             case ItemType.Poison:
                 return poisonMushroomPrefab;
             default:
