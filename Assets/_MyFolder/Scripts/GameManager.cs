@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     // 初回起動かどうかの判定フラグ 
     private bool isFirstLoad = true;
 
+    //BGM名
+    string bgmName;
+
 
     void Awake()
     {
@@ -49,6 +52,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+    void Start()
+    {
+        // ステージ1のBGMを再生
+        PlayStageBGM();
+    }
+
 
     // シーンが読み込まれた直後に呼ばれる
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -131,14 +141,21 @@ public class GameManager : MonoBehaviour
             // ワープ処理
             if (vcam != null)
             {
+                vcam.Follow = null;
+
+                // 即座にプレイヤーを再セットする
+                vcam.Follow = player.transform;
 
                 // ぽんたの座標に、少し高さを足した位置にカメラを飛ばす
                 Vector3 cameraTargetPos = targetPos + Vector3.up * cameraVerticalOffset;
 
-                vcam.OnTargetObjectWarped(player.transform, targetPos - player.transform.position);
-
                 // 高さを補正した位置にカメラを強制移動
                 vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+
+                vcam.OnTargetObjectWarped(player.transform, targetPos - player.transform.position);
+
+                //// 高さを補正した位置にカメラを強制移動
+                //vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
             }
 
             StartCoroutine(Fade(0));
@@ -179,5 +196,12 @@ public class GameManager : MonoBehaviour
             // 指定通りの空白を入れたフォーマット
             lifeText.text = "     ×   " + lives;
         }
+    }
+
+    //BGMを再生するための関数
+    public void PlayStageBGM()
+    {
+        string bgmName = SoundData.BgmType.Start.ToString();
+        GSound.Instance.PlayBgm(bgmName, true);
     }
 }

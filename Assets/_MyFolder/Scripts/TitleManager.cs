@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 public class TitleManager : MonoBehaviour
 {
     [Header("UIパネルのリファレンス")]
-    public GameObject optionPopup; 
+    public GameObject optionPopup;
+
+    //BGM名
+    string bgmName;
 
     void Start()
     {
@@ -13,6 +16,11 @@ public class TitleManager : MonoBehaviour
         {
             optionPopup.SetActive(false);
         }
+
+
+        // タイトルBGMを再生
+        string bgmName = SoundData.BgmType.Title.ToString();
+        GSound.Instance.PlayBgm(bgmName, true);
     }
 
     // 開始ボタン 
