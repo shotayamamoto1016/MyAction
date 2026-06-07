@@ -216,7 +216,7 @@ public class TakenokoSniper : MonoBehaviour
     }
 
     // トゲアニメーション（踏まれそうになった時）
-    System.Collections.IEnumerator SpikeAnimation(GameObject pontaObj)
+    System.Collections.IEnumerator SpikeAnimation(PlayerController player)
     {
         currentState = State.Spiking;
 
@@ -226,8 +226,16 @@ public class TakenokoSniper : MonoBehaviour
             yield return new WaitForSeconds(spikeAnimInterval);
         }
 
-        // ぽんたを死亡させる
-        pontaObj.SetActive(false);
+        //即座に死亡演出
+        if (player != null)
+        {
+            player.Die();
+        }
+
+       
+
+        //// ぽんたを死亡させる
+        //pontaObj.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -244,31 +252,32 @@ public class TakenokoSniper : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player")) return;
         if (currentState == State.Hiding || currentState == State.Emerging) return;
 
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+        if (player == null) return;
+
+        // 無敵状態なら敵が消滅する
+        if (player.isInvincible)
+        {
+            Debug.Log("無敵ぽんたが竹の子を粉砕！");
+            Destroy(gameObject); // 敵を消す（演出を入れるなら GetStomp() など）
+            return;
+        }
+
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            if (contact.normal.y < -0.5f)
+            if (contact.normal.y < -0.5f) // 上から踏もうとした
             {
-                // 上から踏もうとした → トゲで返り討ち
+                // トゲアニメーションを開始
                 if (currentState != State.Spiking)
                 {
-                    StartCoroutine(SpikeAnimation(collision.gameObject));
+                    StartCoroutine(SpikeAnimation(player));
+
                 }
                 return;
             }
-            else
+            else // 横から当たった
             {
-                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                if (player != null)
-                {
-                    if (player.isInvincible)
-                    {
-                        Debug.Log("ぽんたが無敵なので、敵側で自爆処理を実行");
-                         // 踏まれた時と同じ演出で消える
-                        return;
-                    }
-
-                    player.Die(); // ぽんたの死亡演出を呼び出す
-                }
+                player.Die(); // 即座に死亡演出
                 return;
             }
         }

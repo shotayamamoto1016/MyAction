@@ -1,18 +1,44 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
-    // 開始ボタンから呼ばれる関数
+    [Header("UIパネルのリファレンス")]
+    public GameObject optionPopup; 
+
+    void Start()
+    {
+        // ゲーム開始時はポップアップを確実に閉じておく
+        if (optionPopup != null)
+        {
+            optionPopup.SetActive(false);
+        }
+    }
+
+    // 開始ボタン 
     public void OnClickStartButton()
     {
-        // シーンを読み込む
+        // 02_Stage1 シーンを読み込む
         SceneManager.LoadScene("02_Stage1");
     }
 
-    // オプションボタン用
+    // 設定ボタン
     public void OnClickOptionButton()
     {
-        Debug.Log("オプションボタンが押されました");
+        if (optionPopup != null)
+        {
+            optionPopup.SetActive(true);
+            Debug.Log("設定画面を開きました");
+        }
+    }
+
+    // 閉じるボタン
+    public void OnClickCloseOptionButton()
+    {
+        if (optionPopup != null)
+        {
+            optionPopup.SetActive(false);
+            Debug.Log("設定画面を閉じました");
+        }
     }
 }
