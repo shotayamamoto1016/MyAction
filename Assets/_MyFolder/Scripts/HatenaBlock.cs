@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HatenaBlock : MonoBehaviour
+public class HatenaBlock : MonoBehaviour, IResettable
 {
     [Header("設定")]
     public Color usedBlockColor = new Color(0.49f, 0.25f, 0f, 1f);
@@ -10,11 +10,13 @@ public class HatenaBlock : MonoBehaviour
     private bool isUsed = false;
     private Vector3 startPosition;
     private SpriteRenderer spriteRenderer;
+    private Color originalColor;
 
     void Start()
     {
         startPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color; // 元の色を保存
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -68,5 +70,12 @@ public class HatenaBlock : MonoBehaviour
 
         // 色を茶色に変更
         spriteRenderer.color = usedBlockColor;
+    }
+
+    public void ResetObject()
+    {
+        isUsed = false;
+        transform.position = startPosition;
+        spriteRenderer.color = originalColor; // 元の色に戻す
     }
 }

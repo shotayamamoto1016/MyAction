@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TakenokoSniper : MonoBehaviour
+public class TakenokoSniper : MonoBehaviour, IResettable
 {
     [Header("出現設定")]
     public float detectRange = 6f;
@@ -42,6 +42,7 @@ public class TakenokoSniper : MonoBehaviour
 
     private Vector3 hidePosition;
     private Vector3 showPosition;
+    private Vector3 startPosition; // 初期位置を保存
 
     private enum State { Hiding, Emerging, Idle, Shooting, Spiking }
     private State currentState = State.Hiding;
@@ -50,6 +51,7 @@ public class TakenokoSniper : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindWithTag("Player")?.transform;
+        startPosition = transform.position; // 初期位置を保存
 
         // 最初は地面に隠れた位置に移動
         hidePosition = transform.position + Vector3.up * hideOffsetY;
@@ -258,8 +260,8 @@ public class TakenokoSniper : MonoBehaviour
         // 無敵状態なら敵が消滅する
         if (player.isInvincible)
         {
-            Debug.Log("無敵ぽんたが竹の子を粉砕！");
-            Destroy(gameObject); // 敵を消す（演出を入れるなら GetStomp() など）
+            GetComponent<Collider2D>().enabled = false;
+            gameObject.SetActive(false); // Destroyの代わりに非表示
             return;
         }
 
@@ -281,5 +283,31 @@ public class TakenokoSniper : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void ResetObject()
+    {
+        // 状態をリセット
+        currentState = State.Hiding;
+        isCoolingDown = false;
+        cooldownTimer = 0f;
+        shootTimer = 0f;
+
+        // 位置をリセット
+        hidePosition = startPosition + Vector3.up * hideOffsetY;
+        showPosition = startPosition;
+        transform.position = hidePosition;
+
+        // Colliderを有効化
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        // 表示をリセット
+        gameObject.SetActive(true);
+        if (emergeSprites.Length > 0)
+            spriteRenderer.sprite = emergeSprites[0];
+
+        // コルーチンを停止
+        StopAllCoroutines();
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CrumbleBlock : MonoBehaviour
+public class CrumbleBlock : MonoBehaviour, IResettable
 {
     [Header("İ’è")]
     public float crumbleDelay = 1.0f;  // æ‚Á‚Ä‚©‚ç•ö‚ê‚é‚Ü‚Å‚ÌŠÔ
@@ -61,6 +61,22 @@ public class CrumbleBlock : MonoBehaviour
         spriteRenderer.enabled = true;
         col.enabled = true;
         isCrumbling = false;
+        transform.position = startPosition;
+    }
+
+    //public void ResetBlock()
+    //{
+    //    isCrumbling = false;
+    //    spriteRenderer.enabled = true;
+    //    col.enabled = true;
+    //    transform.position = startPosition;
+    //}
+
+    public void ResetObject()
+    {
+        isCrumbling = false;
+        spriteRenderer.enabled = true;
+        col.enabled = true;
         transform.position = startPosition;
     }
 }

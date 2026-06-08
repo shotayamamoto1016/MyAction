@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ItemBlock : MonoBehaviour
+public class ItemBlock : MonoBehaviour, IResettable
 {
     [Header("ブロック設定")]
     public Color usedBlockColor = new Color(0.49f, 0.25f, 0f, 1f);
@@ -30,11 +30,13 @@ public class ItemBlock : MonoBehaviour
     private bool isUsed = false;
     private Vector3 startPosition;
     private SpriteRenderer spriteRenderer;
+    private Color originalColor;
 
     void Start()
     {
         startPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color; // 元の色を保存
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -130,5 +132,12 @@ public class ItemBlock : MonoBehaviour
         }
 
         item.transform.position = showPos;
+    }
+
+    public void ResetObject()
+    {
+        isUsed = false;
+        transform.position = startPosition;
+        spriteRenderer.color = originalColor; // 元の色に戻す
     }
 }

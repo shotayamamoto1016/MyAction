@@ -3,14 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    public static PauseManager instance;
+
     [Header("表示・非表示にする親オブジェクト")]
+    public GameObject menuButton;
     public GameObject menuPopup;    // メインのポーズ画面
     public GameObject confirmPopup; // 「本当に戻りますか？」画面
 
     private bool isPaused = false;
 
+    void Awake()
+    {
+        // シングルトンの設定
+        if (instance == null) instance = this;
+    }
+
     void Update()
     {
+        if (!menuButton.activeSelf) return;
+
+
         // Escキーでもポーズの開閉ができるように
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -19,7 +31,14 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    
+    public void SetMenuButtonActive(bool active)
+    {
+        if (menuButton != null)
+        {
+            menuButton.SetActive(active);
+        }
+    }
+
 
     // 左上のメニューボタンを押した時
     public void PressMenuButton()

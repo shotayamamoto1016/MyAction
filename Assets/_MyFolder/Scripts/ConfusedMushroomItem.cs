@@ -1,20 +1,38 @@
 using UnityEngine;
 
-public class ConfusedMushroomItem : MonoBehaviour
+public class ConfusedMushroomItem : MonoBehaviour, IResettable
 {
     [Header("ç¨óêê›íË")]
     public float confusedDuration = 20f; // ç¨óêÇ∑ÇÈéûä‘
 
+    private Vector3 startPosition;
+    private bool isCollected = false;
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isCollected) return;
+
         if (other.CompareTag("Player"))
         {
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null && !player.isDead)
             {
+                isCollected = true;
                 player.StartConfused(confusedDuration);
-                Destroy(gameObject);
+                gameObject.SetActive(false); // DestroyÇÃë„ÇÌÇËÇ…îÒï\é¶
             }
         }
+    }
+
+    public void ResetObject()
+    {
+        isCollected = false;
+        gameObject.SetActive(true);
+        transform.position = startPosition;
     }
 }

@@ -58,6 +58,9 @@ public class GSound
         {
             obj = new GameObject("Sound");
 
+            // シーンをまたいでもこのオブジェクトを消さないように設定
+            Object.DontDestroyOnLoad(obj);
+
             //AudioSourceの作成
             sourceBgm = obj.AddComponent<AudioSource>();
             sourceSe = obj.AddComponent<AudioSource>();
@@ -106,28 +109,24 @@ public class GSound
         if (poolBgm.ContainsKey(fileName) == false) return false;
 
         //現在のBGMを止める
-        StopBgm();
+        //StopBgm();
 
         //リソースの取得
         AudioSource source = GetAudioSource(Type.bgm);
 
         AudioClip clip = poolBgm[fileName];
 
+        // もし今流れている曲がこれから流そうとする曲と同じならそのままにする
+        if (source.clip == clip && source.isPlaying)
+        {
+            return true; // 再生し直さずに終了
+        }
+
+        // ここから下は別の曲を流す時だけ実行される
+        StopBgm();
         source.clip = clip;
-
-        //音量設定
         source.volume = bgmVolume;
-
-        //ループ設定
-        if (loop)
-        {
-            source.loop = true;
-        }
-
-        else
-        {
-            source.loop = false;
-        }
+        source.loop = loop;
 
         //再生
         source.Play();

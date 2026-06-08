@@ -1,6 +1,7 @@
 using UnityEngine;
+using System.Collections;
 
-public class Koromochi : MonoBehaviour
+public class Koromochi : MonoBehaviour, IResettable
 {
     [Header("移動設定")]
     public float moveSpeed = 2f;
@@ -29,8 +30,11 @@ public class Koromochi : MonoBehaviour
     private float flipCoolTime = 0f;
     private float flipCoolDuration = 0.5f; // 折り返し後0.5秒は折り返さない
 
+    private Vector3 startPosition;
+
     void Start()
     {
+        startPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -155,6 +159,48 @@ public class Koromochi : MonoBehaviour
         }
 
         GetComponent<Collider2D>().enabled = false;
-        Destroy(gameObject, flatDuration);
+        //Destroy(gameObject, flatDuration);
+
+        // Destroyの代わりに非表示にする
+        StartCoroutine(HideAfterDelay(flatDuration));
+    }
+
+    IEnumerator HideAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        rb.linearVelocity = Vector2.zero;
+        gameObject.SetActive(false);
+    }
+
+    public void ResetKoromochi()
+    {
+        isDead = false;
+        gameObject.SetActive(true);
+        //rb.bodyType = RigidbodyType2D.Dynamic;
+        GetComponent<Collider2D>().enabled = true;
+        if (anim != null)
+        {
+            anim.enabled = true;
+            //spriteRenderer.sprite = null;
+        }
+        movingLeft = true;
+        flipCoolTime = 0f;
+        transform.position = startPosition;
+        transform.rotation = Quaternion.identity;
+
+        // localScaleをリセット
+        transform.localScale = new Vector3(
+            Mathf.Abs(transform.localScale.x),
+            transform.localScale.y,
+            transform.localScale.z);
+
+        // Rigidbody2DをDynamicに戻してから速度を設定
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.linearVelocity = new Vector2(-moveSpeed, 0f);
+    }
+
+    public void ResetObject()
+    {
+        ResetKoromochi();
     }
 }

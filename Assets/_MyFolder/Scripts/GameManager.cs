@@ -89,6 +89,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DeathSequence()
     {
+        // 死んだ瞬間にポーズボタンを消す
+        if (PauseManager.instance != null)
+        {
+            PauseManager.instance.SetMenuButtonActive(false);
+        }
+
         // 演出待ち
         yield return new WaitForSeconds(0.6f);
 
@@ -134,6 +140,12 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
+            // ステージをリセット
+            if (StageResetManager.instance != null)
+            {
+                StageResetManager.instance.ResetStage();
+            }
+
             // ぽんたをワープさせる
             player.transform.position = targetPos;
             player.GetComponent<PlayerController>().ResetPlayer();
@@ -141,21 +153,26 @@ public class GameManager : MonoBehaviour
             // ワープ処理
             if (vcam != null)
             {
+                // 一度Followを外す
                 vcam.Follow = null;
 
-                // 即座にプレイヤーを再セットする
-                vcam.Follow = player.transform;
+                // カメラをぽんたの位置に強制移動
+                Vector3 cameraTargetPos = new Vector3(
+                    targetPos.x,
+                    targetPos.y + cameraVerticalOffset,
+                    vcam.transform.position.z);
 
-                // ぽんたの座標に、少し高さを足した位置にカメラを飛ばす
-                Vector3 cameraTargetPos = targetPos + Vector3.up * cameraVerticalOffset;
-
-                // 高さを補正した位置にカメラを強制移動
+                vcam.transform.position = cameraTargetPos;
                 vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
 
-                vcam.OnTargetObjectWarped(player.transform, targetPos - player.transform.position);
+                // Followを再セット
+                vcam.Follow = player.transform;
+            }
 
-                //// 高さを補正した位置にカメラを強制移動
-                //vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+            // 復活したらポーズボタンを再び表示する
+            if (PauseManager.instance != null)
+            {
+                PauseManager.instance.SetMenuButtonActive(true);
             }
 
             StartCoroutine(Fade(0));

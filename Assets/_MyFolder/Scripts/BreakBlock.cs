@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BreakBlock : MonoBehaviour
+public class BreakBlock : MonoBehaviour, IResettable
 {
     [Header("”j•Ğİ’è")]
     public Sprite fragmentSprite; // ”j•Ğ‚Ì‰æ‘œ
@@ -8,16 +8,27 @@ public class BreakBlock : MonoBehaviour
     public float fragmentForce = 5f; // ”j•Ğ‚ª”ò‚Ô‹­‚³
     public float fragmentLifeTime = 0.8f; // ”j•Ğ‚ªÁ‚¦‚é‚Ü‚Å‚ÌŠÔ
 
+    private Vector3 startPosition;
+    private bool isBroken = false;
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isBroken) return;
+
         if (collision.gameObject.CompareTag("Player"))
         {
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 if (contact.normal.y > 0.5f)
                 {
+                    isBroken = true;
                     SpawnFragments();
-                    Destroy(gameObject);
+                    gameObject.SetActive(false); // Destroy‚Ì‘ã‚í‚è‚É”ñ•\¦
                     break;
                 }
             }
@@ -56,5 +67,12 @@ public class BreakBlock : MonoBehaviour
             // ˆê’èŠÔŒã‚É”j•Ğ‚ğíœ
             Destroy(fragment, fragmentLifeTime);
         }
+    }
+
+    public void ResetObject()
+    {
+        isBroken = false;
+        transform.position = startPosition;
+        gameObject.SetActive(true);
     }
 }

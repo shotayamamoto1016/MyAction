@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CollapseBlock : MonoBehaviour
+public class CollapseBlock : MonoBehaviour, IResettable
 {
     [Header("崩れる設定")]
     public float crumbleDelay = 1.0f;  // 乗ってから崩れるまでの時間
@@ -16,8 +16,11 @@ public class CollapseBlock : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
 
+    private Vector3 startPosition;
+
     void Start()
     {
+        startPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
     }
@@ -52,8 +55,8 @@ public class CollapseBlock : MonoBehaviour
         // 破片を飛ばす
         SpawnFragments();
 
-        // ブロックを破壊
-        Destroy(gameObject);
+        // Destroyの代わりに非表示にする
+        gameObject.SetActive(false);
     }
 
     void SpawnFragments()
@@ -83,5 +86,26 @@ public class CollapseBlock : MonoBehaviour
 
             Destroy(fragment, fragmentLifeTime);
         }
+    }
+
+    // ResetBlockを追加
+    //public void ResetBlock()
+    //{
+    //    isCrumbling = false;
+    //    gameObject.SetActive(true);
+    //    spriteRenderer.enabled = true;
+    //    col.enabled = true;
+    //    transform.position = startPosition;
+    //    transform.rotation = Quaternion.identity;
+    //}
+
+    public void ResetObject()
+    {
+        isCrumbling = false;
+        gameObject.SetActive(true);
+        spriteRenderer.enabled = true;
+        col.enabled = true;
+        transform.position = startPosition;
+        transform.rotation = Quaternion.identity;
     }
 }

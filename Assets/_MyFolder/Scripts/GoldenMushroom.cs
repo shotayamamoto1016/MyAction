@@ -1,22 +1,40 @@
 using UnityEngine;
 
-public class GoldenMushroom : MonoBehaviour
+public class GoldenMushroom : MonoBehaviour, IResettable
 {
-   
+    private Vector3 startPosition;
+    private bool isCollected = false;
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
+
+
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isCollected) return;
+
         // ぽんたが触れたか判定
         if (other.CompareTag("Player"))
         {
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
             {
-                // ぽんたの無敵メソッドを呼び出す
+                isCollected = true;
                 player.StartInvincibility();
+                gameObject.SetActive(false); // Destroyの代わりに非表示
             }
 
             // キノコを消す
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
+    }
+
+    public void ResetObject()
+    {
+        isCollected = false;
+        transform.position = startPosition;
+        gameObject.SetActive(true);
     }
 }

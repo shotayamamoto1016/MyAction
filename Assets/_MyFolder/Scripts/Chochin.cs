@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 //using static Unity.Cinemachine.InputAxisControllerBase<T>;
 
-public class Chochin : MonoBehaviour
+public class Chochin : MonoBehaviour, IResettable
 {
     [Header("通常移動設定（大きく波打つ）")]
     public float moveSpeed = 0.5f;      // 左右移動の速さ
@@ -174,5 +174,46 @@ public class Chochin : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+    }
+
+    // 倒された時にCheckpointManagerに登録
+    void OnDestroy()
+    {
+        if (isDead && CheckpointManager.instance != null)
+        {
+            CheckpointManager.instance.RegisterDefeatedChochin(
+                gameObject.GetInstanceID());
+        }
+    }
+
+    // 初期化処理
+    public void ResetChochin()
+    {
+        currentState = State.Normal;
+        isDead = false;
+        timeCounter = 0f;
+        transform.position = startPosition;
+
+        if (spriteRenderer != null && normalSprite != null)
+        {
+            spriteRenderer.sprite = normalSprite;
+        }
+
+        // Colliderを有効化
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        // Rigidbody2Dをリセット
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    public void ResetObject()
+    {
+        ResetChochin();
     }
 }
