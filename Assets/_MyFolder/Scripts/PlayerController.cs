@@ -439,5 +439,13 @@ public class PlayerController : MonoBehaviour
         if (sparkles != null) Destroy(sparkles);
     }
 
-   
+    // 向きをリセットするメソッド
+    public void ResetFacing()
+    {
+        facingRight = true;
+        transform.localScale = new Vector3(
+            Mathf.Abs(transform.localScale.x),
+            transform.localScale.y,
+            transform.localScale.z);
+    }
 }
