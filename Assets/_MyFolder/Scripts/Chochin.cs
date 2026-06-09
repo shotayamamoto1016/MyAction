@@ -164,6 +164,7 @@ public class Chochin : MonoBehaviour, IResettable
     IEnumerator AscendAnimation()
     {
         isDead = true;
+        GSound.Instance.PlaySe(SoundData.SeType.Enemy_Chouchin.ToString());
         GetComponent<Collider2D>().enabled = false;
         transform.rotation = Quaternion.identity;
 

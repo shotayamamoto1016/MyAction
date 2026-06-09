@@ -1,4 +1,5 @@
 using UnityEngine;
+using static SoundData;
 
 public class HiddenBlock : MonoBehaviour, IResettable
 {
@@ -45,6 +46,8 @@ public class HiddenBlock : MonoBehaviour, IResettable
 
     void Reveal(Rigidbody2D playerRb)
     {
+        GSound.Instance.PlaySe(SeType.Block_Hit.ToString());
+
         isRevealed = true;
         spriteRenderer.enabled = true;
         boxCollider.isTrigger = false;

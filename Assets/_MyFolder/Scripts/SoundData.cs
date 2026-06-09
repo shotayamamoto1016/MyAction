@@ -18,7 +18,16 @@ public class SoundData : ScriptableObject
     public enum SeType
     {
         none,
-        
+        Button_Click,      
+        Block_Break,       
+        Block_Hit,         
+        Item_Appear,       
+        Enemy_Koromochi,   
+        Enemy_Chouchin,    
+        Enemy_Takenoko,    
+        Item_Freeze,       
+        Item_Poison,       
+        Item_Confuse
     }
 
     //BGM‚ğŠÇ—‚·‚éƒNƒ‰ƒX

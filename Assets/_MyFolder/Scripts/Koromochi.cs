@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static SoundData;
 
 public class Koromochi : MonoBehaviour, IResettable
 {
@@ -142,6 +143,8 @@ public class Koromochi : MonoBehaviour, IResettable
 
     void GetStomp()
     {
+        GSound.Instance.PlaySe(SeType.Enemy_Koromochi.ToString());
+
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;

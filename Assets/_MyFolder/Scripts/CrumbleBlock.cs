@@ -48,6 +48,8 @@ public class CrumbleBlock : MonoBehaviour, IResettable
 
     void Crumble()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Block_Break.ToString());
+
         // ブロックを非表示・Colliderを無効化
         spriteRenderer.enabled = false;
         col.enabled = false;

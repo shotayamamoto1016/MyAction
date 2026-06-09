@@ -23,6 +23,10 @@ public class FreezeMushroomItem : MonoBehaviour, IResettable
             if (player != null && !player.isDead)
             {
                 isCollected = true;
+
+                // “€‚éSE‚ğÄ¶
+                GSound.Instance.PlaySe(SoundData.SeType.Item_Freeze.ToString());
+
                 player.FreezeAndDie(freezeDuration);
                 gameObject.SetActive(false); // Destroy‚Ì‘ã‚í‚è‚É”ñ•\¦
             }

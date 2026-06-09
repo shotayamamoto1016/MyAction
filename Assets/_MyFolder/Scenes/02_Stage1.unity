@@ -25213,7 +25213,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103, y: -1.31, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -1.31, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27947,7 +27947,7 @@ Transform:
   m_GameObject: {fileID: 1318020884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103, y: -1.31, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -1.31, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28951,7 +28951,7 @@ Transform:
   m_GameObject: {fileID: 1657808916}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: -1.31, z: 0}
+  m_LocalPosition: {x: -10, y: -1.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30266,6 +30266,27 @@ MonoBehaviour:
   lifeUI: {fileID: 1601460792}
   vcam: {fileID: 1318020885}
   cameraVerticalOffset: 3.85
+  seSounds:
+  - Name: Block_Break
+    Clip: {fileID: 8300000, guid: 6bbc908376853e340bb7228f31a2afd2, type: 3}
+  - Name: Block_Hit
+    Clip: {fileID: 8300000, guid: c3be651a807660247b9f623201a8caf1, type: 3}
+  - Name: Button_Click
+    Clip: {fileID: 8300000, guid: 89cd57e112dd1d54589f83dcd55857b1, type: 3}
+  - Name: Enemy_Chouchin
+    Clip: {fileID: 8300000, guid: 0df4a54af42a1874392bc66a902d0963, type: 3}
+  - Name: Enemy_Koromochi
+    Clip: {fileID: 8300000, guid: 63815dd35e0d1cd4e8e4aa63bbe00c7c, type: 3}
+  - Name: Enemy_Takenoko
+    Clip: {fileID: 8300000, guid: 572f746fe4620eb439b44241ad407783, type: 3}
+  - Name: Item_Appear
+    Clip: {fileID: 8300000, guid: ab83fa078af2a6a4b876b4d43db9f810, type: 3}
+  - Name: Item_Confuse
+    Clip: {fileID: 8300000, guid: 83917cdef019670409f8bbd1c60b4cd0, type: 3}
+  - Name: Item_Freeze
+    Clip: {fileID: 8300000, guid: 708a9d552b01e794fb8ce57e18fe1eac, type: 3}
+  - Name: Item_Poison
+    Clip: {fileID: 8300000, guid: f823b8816be41b5459a742596563c501, type: 3}
 --- !u!4 &1950800709
 Transform:
   m_ObjectHideFlags: 0

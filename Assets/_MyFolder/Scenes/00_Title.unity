@@ -1884,6 +1884,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionPopup: {fileID: 73757991}
+  seClips:
+  - {fileID: 8300000, guid: 89cd57e112dd1d54589f83dcd55857b1, type: 3}
 --- !u!4 &1631983760
 Transform:
   m_ObjectHideFlags: 0

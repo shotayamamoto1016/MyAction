@@ -24,6 +24,10 @@ public class PoisonMushroomItem : MonoBehaviour, IResettable
             if (player != null && !player.isDead)
             {
                 isCollected = true;
+
+                // “ÅSE‚ğÄ¶
+                GSound.Instance.PlaySe(SoundData.SeType.Item_Poison.ToString());
+
                 player.PoisonAndDie(poisonDuration);
                 gameObject.SetActive(false); // Destroy‚Ì‘ã‚í‚è‚É”ñ•\¦
             }

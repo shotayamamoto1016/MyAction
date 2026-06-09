@@ -23,6 +23,10 @@ public class ConfusedMushroomItem : MonoBehaviour, IResettable
             if (player != null && !player.isDead)
             {
                 isCollected = true;
+
+                // ¬—SE‚ğÄ¶
+                GSound.Instance.PlaySe(SoundData.SeType.Item_Confuse.ToString());
+
                 player.StartConfused(confusedDuration);
                 gameObject.SetActive(false); // Destroy‚Ì‘ã‚í‚è‚É”ñ•\¦
             }

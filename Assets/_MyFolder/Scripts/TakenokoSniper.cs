@@ -177,6 +177,9 @@ public class TakenokoSniper : MonoBehaviour, IResettable
     {
         if (bulletPrefab == null || player == null) return;
 
+        // 発射音
+        GSound.Instance.PlaySe(SoundData.SeType.Enemy_Takenoko.ToString());
+
         // 【修正】向きに合わせて発射位置を調整
         // プレイヤーが左にいればマイナス方向、右にいればプラス方向にオフセットをかける
         float directionX = (player.position.x < transform.position.x) ? -1f : 1f;

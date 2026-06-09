@@ -58,6 +58,8 @@ public class ItemBlock : MonoBehaviour, IResettable
     {
         isUsed = true;
 
+        GSound.Instance.PlaySe(SoundData.SeType.Item_Appear.ToString());
+
         // 上に跳ねるアニメーション
         float elapsed = 0f;
         while (elapsed < hitAnimationDuration)

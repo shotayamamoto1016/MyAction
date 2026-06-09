@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.Cinemachine;
 
+[System.Serializable]
+public struct SoundDataEntry
+{
+    public string Name;
+    public AudioClip Clip;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -29,6 +36,8 @@ public class GameManager : MonoBehaviour
     //BGM名
     string bgmName;
 
+    [Header("サウンドデータ登録")]
+    public SoundDataEntry[] seSounds;  // SEのリスト
 
     void Awake()
     {
@@ -36,6 +45,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // ステージが変わっても残機を維持
+            // ゲーム開始時に音源をGSoundに登録する
+            InitializeSounds();
         }
         else
         {
@@ -58,6 +69,21 @@ public class GameManager : MonoBehaviour
         // ステージ1のBGMを再生
         PlayStageBGM();
     }
+
+    void InitializeSounds()
+    {
+        foreach (var entry in seSounds)
+        {
+            GSound.Instance.SetSe(entry.Name, entry.Clip);
+        }
+    }
+
+    void Update()
+    {
+        
+        GSound.Instance.CheckSeQueue();
+    }
+
 
 
     // シーンが読み込まれた直後に呼ばれる

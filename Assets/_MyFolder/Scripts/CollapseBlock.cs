@@ -52,6 +52,8 @@ public class CollapseBlock : MonoBehaviour, IResettable
 
     void Crumble()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Block_Break.ToString());
+
         // ”j•Ð‚ð”ò‚Î‚·
         SpawnFragments();
 

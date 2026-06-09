@@ -1,4 +1,5 @@
 using UnityEngine;
+using static SoundData;
 
 public class HatenaBlock : MonoBehaviour, IResettable
 {
@@ -36,6 +37,8 @@ public class HatenaBlock : MonoBehaviour, IResettable
 
     void HitFromBelow()
     {
+        GSound.Instance.PlaySe(SeType.Block_Hit.ToString());
+
         isUsed = true;
         StartCoroutine(HitAnimation());
     }

@@ -43,6 +43,7 @@ public class PauseManager : MonoBehaviour
     // 左上のメニューボタンを押した時
     public void PressMenuButton()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         isPaused = true;
         menuPopup.SetActive(true);
         confirmPopup.SetActive(false); // 確認画面は念のため閉じる
@@ -52,6 +53,7 @@ public class PauseManager : MonoBehaviour
     // ゲームに戻る
     public void Resume()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         isPaused = false;
         menuPopup.SetActive(false);
         confirmPopup.SetActive(false);
@@ -63,6 +65,7 @@ public class PauseManager : MonoBehaviour
     // 「タイトルへ戻る」ボタンを押した時
     public void PressReturnTitle()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         // メインポーズ画面を隠して確認画面を出す
         menuPopup.SetActive(false);
         confirmPopup.SetActive(true);
@@ -71,6 +74,7 @@ public class PauseManager : MonoBehaviour
     // 確認画面で「いいえ」を押した時
     public void CancelReturn()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         confirmPopup.SetActive(false);
         menuPopup.SetActive(true); // メインポーズ画面に戻す
     }
@@ -78,6 +82,7 @@ public class PauseManager : MonoBehaviour
     // 確認画面で「はい」を押した時
     public void ConfirmReturn()
     {
+        GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         Time.timeScale = 1f; // 重要：時間を戻してからシーン移動
         SceneManager.LoadScene("00_Title"); // タイトルのシーン名に合わせて変更
     }
