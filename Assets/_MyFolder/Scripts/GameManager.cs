@@ -176,42 +176,81 @@ public class GameManager : MonoBehaviour
             player.transform.position = targetPos;
             player.GetComponent<PlayerController>().ResetPlayer();
 
-            // ワープ処理
-            if (vcam != null)
-            {
-                // 一度Followを外す
-                vcam.Follow = null;
-
-                // カメラをぽんたの位置に強制移動
-                Vector3 cameraTargetPos = new Vector3(
-                    targetPos.x,
-                    targetPos.y + cameraVerticalOffset,
-                    vcam.transform.position.z);
-
-                vcam.transform.position = cameraTargetPos;
-                vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
-
-                // Followを再セット
-                vcam.Follow = player.transform;
-            }
-
             // 復活したらポーズボタンを再び表示する
             if (PauseManager.instance != null)
             {
                 PauseManager.instance.SetMenuButtonActive(true);
             }
 
-            StartCoroutine(Fade(0));
+            // カメラ処理をコルーチンで実行 
+            StartCoroutine(ResetCamera(player.transform, targetPos));
+
+            //// ワープ処理
+            //if (vcam != null)
+            //{
+            //    // 一度Followを外す
+            //    vcam.Follow = null;
+
+            //    // カメラをぽんたの位置に強制移動
+            //    Vector3 cameraTargetPos = new Vector3(
+            //        targetPos.x,
+            //        targetPos.y + cameraVerticalOffset,
+            //        vcam.transform.position.z);
+
+            //    vcam.transform.position = cameraTargetPos;
+            //    vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+
+            //    // Followを再セット
+            //    vcam.Follow = player.transform;
+            //}
+
+            //// 復活したらポーズボタンを再び表示する
+            ////if (PauseManager.instance != null)
+            ////{
+            ////    PauseManager.instance.SetMenuButtonActive(true);
+            ////}
+
+            //StartCoroutine(Fade(0));
         }
     }
 
-    // カメラが追いつくまで待ってから画面を明るくする
-    //IEnumerator RemoveFadePanel()
-    //{
-    //    yield return new WaitForSeconds(0.3f); // 0.3秒だけ黒いまま待機
+    
 
-    //    if (fadePanel != null) fadePanel.SetActive(false);
-    //}
+    IEnumerator ResetCamera(Transform playerTransform, Vector3 targetPos)
+    {
+        if (vcam == null)
+        {
+            StartCoroutine(Fade(0));
+            yield break;
+        }
+
+        // Followを一度外す
+        vcam.Follow = null;
+
+        // カメラをぽんたの位置に強制移動
+        Vector3 cameraTargetPos = new Vector3(
+            targetPos.x,
+            targetPos.y + cameraVerticalOffset,
+            vcam.transform.position.z);
+
+        vcam.transform.position = cameraTargetPos;
+        vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+
+        // 1フレーム待つ
+        yield return null;
+
+        // Followを再セット
+        vcam.Follow = playerTransform;
+
+        // もう1フレーム待つ
+        yield return null;
+
+        // カメラを再度強制移動
+        vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+
+        // フェードイン開始
+        StartCoroutine(Fade(0));
+    }
 
     //フェード処理
     IEnumerator Fade(float targetAlpha)
