@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
 
     public bool isDead = false;
 
+    // 入力を無効化するフラグ
+    public bool isInputDisabled = false;
+
     //private float originalMoveSpeed;
     //private float originalJumpForce;
 
@@ -64,6 +67,9 @@ public class PlayerController : MonoBehaviour
     {
         // 死んでいる間は以下の操作を全て無視する
         if (isDead) return;
+
+        // 入力無効化中は操作を受け付けない 
+        if (isInputDisabled) return;
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
@@ -209,6 +215,13 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("無敵パワーで敵を倒した！");
                 return;
             }
+
+            // お助け亀の場合は死亡判定をスキップ
+            if (collision.gameObject.GetComponent<OtasukeTurtle>() != null)
+            {
+                return;
+            }
+
             else
             {
                 // 通常時は上から踏んだか判定
@@ -447,5 +460,50 @@ public class PlayerController : MonoBehaviour
             Mathf.Abs(transform.localScale.x),
             transform.localScale.y,
             transform.localScale.z);
+    }
+
+    // Ground判定を無効化するメソッド
+    public void DisableGroundCollision()
+    {
+        Collider2D playerCol = GetComponent<Collider2D>();
+        if (playerCol == null) return;
+
+        // GroundレイヤーのすべてのColliderとの当たり判定を無効化
+        GameObject[] groundObjects = GameObject.FindObjectsByType<GameObject>(
+            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+        foreach (var obj in groundObjects)
+        {
+            if (obj.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Collider2D groundCol = obj.GetComponent<Collider2D>();
+                if (groundCol != null)
+                {
+                    Physics2D.IgnoreCollision(playerCol, groundCol, true);
+                }
+            }
+        }
+    }
+
+    // Ground判定を有効化するメソッド
+    public void EnableGroundCollision()
+    {
+        Collider2D playerCol = GetComponent<Collider2D>();
+        if (playerCol == null) return;
+
+        GameObject[] groundObjects = GameObject.FindObjectsByType<GameObject>(
+            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+        foreach (var obj in groundObjects)
+        {
+            if (obj.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Collider2D groundCol = obj.GetComponent<Collider2D>();
+                if (groundCol != null)
+                {
+                    Physics2D.IgnoreCollision(playerCol, groundCol, false);
+                }
+            }
+        }
     }
 }

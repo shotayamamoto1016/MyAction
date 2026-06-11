@@ -2880,7 +2880,7 @@ Transform:
   m_GameObject: {fileID: 483153520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9999995, y: -1.31, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3018,7 +3018,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9999995, y: -1.31, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4670,7 +4670,7 @@ Transform:
   m_GameObject: {fileID: 1113680486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -1.31, z: 0}
+  m_LocalPosition: {x: -10, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4753,6 +4753,7 @@ MonoBehaviour:
   sparkleEffectPrefab: {fileID: 3720498008412243798, guid: 375e47ef59a081244a3d538a99981ca6, type: 3}
   isConfused: 0
   isDead: 0
+  isInputDisabled: 0
 --- !u!95 &1113680490
 Animator:
   serializedVersion: 7
