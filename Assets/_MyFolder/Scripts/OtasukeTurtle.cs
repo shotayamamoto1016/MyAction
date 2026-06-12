@@ -90,7 +90,9 @@ public class OtasukeTurtle : MonoBehaviour, IResettable
             bool isWall = wallCheckFront != null && Physics2D.OverlapCircle(
                 wallCheckFront.position, checkRadius, groundLayer);
 
-            // 状態が変化した時だけ反転する
+            // デバッグ用
+            // Debug.Log($"isGrounded: {isGrounded}, isWall: {isWall}, wasGrounded: {wasGrounded}");
+
             bool shouldFlip = false;
 
             if (!isGrounded && wasGrounded) shouldFlip = true;
@@ -105,7 +107,6 @@ public class OtasukeTurtle : MonoBehaviour, IResettable
             wasWall = isWall;
         }
 
-        // 追跡中はぽんたの方向に向く
         if (isChasing && player != null)
         {
             bool playerIsLeft = player.position.x < transform.position.x;
@@ -226,13 +227,22 @@ public class OtasukeTurtle : MonoBehaviour, IResettable
         flipCoolTime = 0f;
         wasGrounded = true;
         wasWall = false;
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
+        }
         transform.position = startPosition;
         transform.localScale = new Vector3(
             Mathf.Abs(transform.localScale.x),
             transform.localScale.y,
             transform.localScale.z);
-        rb.linearVelocity = Vector2.zero;
+        //rb.linearVelocity = Vector2.zero;
         gameObject.SetActive(true);
-        if (anim != null) anim.Play("Idle");
+        if (anim != null)
+        {
+            anim.Play("Chasing_Idle");
+        }
+            
     }
 }

@@ -94866,6 +94866,7 @@ MonoBehaviour:
   sparkleEffectPrefab: {fileID: 3720498008412243798, guid: 375e47ef59a081244a3d538a99981ca6, type: 3}
   isConfused: 0
   isDead: 0
+  isInputDisabled: 0
 --- !u!61 &1657808923
 BoxCollider2D:
   m_ObjectHideFlags: 0

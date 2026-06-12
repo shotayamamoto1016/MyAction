@@ -178,4 +178,4 @@ MonoBehaviour:
     m_Bits: 64
   fallAnimInterval: 0.1
   fallSpeed: 10
-  respawnTime: 2.5
+  respawnTime: 2

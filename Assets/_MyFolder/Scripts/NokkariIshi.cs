@@ -13,7 +13,7 @@ public class NokkariIshi : MonoBehaviour, IResettable
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
     private bool isActivated = false;
-    private bool isCooldown = false;
+    //private bool isCooldown = false;
     private Vector3 startPosition;
 
     void Start()
@@ -77,7 +77,7 @@ public class NokkariIshi : MonoBehaviour, IResettable
     {
         StopAllCoroutines();
         isActivated = false;
-        isCooldown = false;
+        //isCooldown = false;
         transform.position = startPosition;
 
         if (blockSprites.Length > 0)
