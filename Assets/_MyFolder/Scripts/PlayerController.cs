@@ -204,7 +204,8 @@ public class PlayerController : MonoBehaviour
     // 敵に触れた時の判定
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDead) return; // すでに死んでいたら何もしない
+        // すでに死んでいたら何もしない
+        if (isDead) return; 
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -222,19 +223,23 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            else
+            // いったんひらりの場合は死亡判定をスキップ
+            if (collision.gameObject.GetComponent<IttanHirari>() != null)
             {
-                // 通常時は上から踏んだか判定
-                foreach (ContactPoint2D contact in collision.contacts)
-                {
-                    if (contact.normal.y > 0.5f)
-                    {  
-                        return;
-                    }
-                }
-
-                Die();
+                return;
             }
+
+                // 通常時は上から踏んだか判定
+            foreach (ContactPoint2D contact in collision.contacts)
+             {
+                if (contact.normal.y > 0.5f)
+                {  
+                    return;
+                }
+             }
+
+             Die();
+            
         }
     }
 
