@@ -69,6 +69,14 @@ public class StageResetManager : MonoBehaviour
 
     public void ResetStage()
     {
+        // カラスの弾を全て非表示にする 
+        CrowFireball[] fireballs = FindObjectsByType<CrowFireball>(
+            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (var fireball in fireballs)
+        {
+            fireball.gameObject.SetActive(false);
+        }
+
         // IResettableを実装している全オブジェクトをリセット
         MonoBehaviour[] allObjects = FindObjectsByType<MonoBehaviour>(
             FindObjectsInactive.Include, FindObjectsSortMode.None);

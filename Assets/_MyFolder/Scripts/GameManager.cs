@@ -124,6 +124,14 @@ public class GameManager : MonoBehaviour
         // 演出待ち
         yield return new WaitForSeconds(0.6f);
 
+        // カラスの弾を全て非表示にする 
+        CrowFireball[] fireballs = FindObjectsByType<CrowFireball>(
+            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (var fireball in fireballs)
+        {
+            fireball.gameObject.SetActive(false);
+        }
+
         // j徐々に画面を暗くする
         yield return StartCoroutine(Fade(1));
 

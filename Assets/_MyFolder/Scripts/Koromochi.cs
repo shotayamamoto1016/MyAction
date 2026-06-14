@@ -117,6 +117,11 @@ public class Koromochi : MonoBehaviour, IResettable
                 {
                     // ’Êí‚Í‚Û‚ñ‚½‚ª€‚Ê
                     PlayerDie(collision.gameObject);
+
+                    // Õ“ËŒã‚à‚±‚ë‚à‚¿‚Ì‘¬“x‚ğˆÛ 
+                    rb.linearVelocity = new Vector2(
+                        movingLeft ? -moveSpeed : moveSpeed,
+                        rb.linearVelocity.y);
                     return;
                 }
             }
