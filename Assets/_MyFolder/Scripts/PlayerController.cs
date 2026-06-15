@@ -217,6 +217,12 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
+            // 影法師の場合は死亡判定をスキップ 
+            if (collision.gameObject.GetComponent<KageBoshi>() != null)
+            {
+                return;
+            }
+
             // お助け亀の場合は死亡判定をスキップ
             if (collision.gameObject.GetComponent<OtasukeTurtle>() != null)
             {
