@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272b2d9583e170d4f9853f8ae2028ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRangeX: 100
+  detectRangeX: 120
   idleSprites:
   - {fileID: 3308188546187988305, guid: 48acc746fdde3df4a952ed2d90e948b5, type: 3}
   - {fileID: 1813387936792081469, guid: 48acc746fdde3df4a952ed2d90e948b5, type: 3}

@@ -179,3 +179,4 @@ MonoBehaviour:
   fragmentCount: 4
   fragmentForce: 5
   fragmentLifeTime: 0.8
+  respawnTime: 0.5

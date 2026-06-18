@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BreakBlock : MonoBehaviour, IResettable
@@ -8,12 +10,26 @@ public class BreakBlock : MonoBehaviour, IResettable
     public float fragmentForce = 5f; // 破片が飛ぶ強さ
     public float fragmentLifeTime = 0.8f; // 破片が消えるまでの時間
 
+    [Header("炎で壊れる設定")]
+    public float respawnTime = 3f; // 炎で壊れた後の復活時間
+
     private Vector3 startPosition;
     private bool isBroken = false;
+
+    // コルーチン用の別オブジェクト 
+    private static GameObject coroutineRunner;
 
     void Start()
     {
         startPosition = transform.position;
+
+        // コルーチン実行用の永続オブジェクトを作成
+        if (coroutineRunner == null)
+        {
+            coroutineRunner = new GameObject("BreakBlockCoroutineRunner");
+            coroutineRunner.AddComponent<CoroutineRunner>();
+            DontDestroyOnLoad(coroutineRunner);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -34,6 +50,29 @@ public class BreakBlock : MonoBehaviour, IResettable
                 }
             }
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isBroken) return;
+
+        // 爆炎だるまの弾に当たった場合
+        if (other.GetComponent<BakuenFlame>() != null)
+        {
+            isBroken = true;
+            SpawnFragments();
+            gameObject.SetActive(false);
+
+            // 別オブジェクトでコルーチンを実行 
+            CoroutineRunner.Instance.StartRespawn(this, respawnTime);
+        }
+    }
+
+    IEnumerator RespawnAfterDelay()
+    {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(respawnTime);
+        ResetObject();
     }
 
     void SpawnFragments()

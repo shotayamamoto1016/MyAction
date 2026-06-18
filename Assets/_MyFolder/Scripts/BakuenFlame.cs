@@ -42,7 +42,8 @@ public class BakuenFlame : MonoBehaviour, IResettable
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (isHit) return;
+        // Enemyタグには反応しない
+        if (other.CompareTag("Enemy")) return;
 
         if (other.CompareTag("Player"))
         {
@@ -54,8 +55,8 @@ public class BakuenFlame : MonoBehaviour, IResettable
                     player.Die();
                 }
             }
-            isHit = true;
-            gameObject.SetActive(false);
+            // 弾は消去しない 
+            return;
         }
         // 地面ブロックに当たったら壊す
         else if (other.CompareTag("Ground"))
@@ -65,14 +66,9 @@ public class BakuenFlame : MonoBehaviour, IResettable
 
             SpawnFragments(other.transform.position);
             Destroy(other.gameObject);
-            isHit = true;
-            gameObject.SetActive(false);
+            return;
         }
-        else if (!other.CompareTag("Enemy"))
-        {
-            isHit = true;
-            gameObject.SetActive(false);
-        }
+
     }
 
     void SpawnFragments(Vector3 position)
