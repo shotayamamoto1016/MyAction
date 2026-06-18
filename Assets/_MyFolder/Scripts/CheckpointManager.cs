@@ -11,6 +11,9 @@ public class CheckpointManager : MonoBehaviour
     // 倒したうらめし提灯のIDを記録
     private HashSet<int> defeatedChochinIds = new HashSet<int>();
 
+    // チェックポイント通過時の提灯のIDを記録
+    private HashSet<int> chochinIdsAtCheckpoint = new HashSet<int>();
+
     void Awake()
     {
         if (instance == null)
@@ -28,6 +31,10 @@ public class CheckpointManager : MonoBehaviour
     {
         checkpointPosition = position;
         hasCheckpoint = true;
+
+        // チェックポイント通過時点での倒済み提灯IDを記録
+        chochinIdsAtCheckpoint = new HashSet<int>(defeatedChochinIds);
+
         Debug.Log("チェックポイント設定: " + position);
     }
 
@@ -52,7 +59,8 @@ public class CheckpointManager : MonoBehaviour
     // うらめし提灯が倒されているか確認
     public bool IsChochinDefeated(int id)
     {
-        return defeatedChochinIds.Contains(id);
+        // チェックポイント通過時点で倒済みのIDのみtrue
+        return chochinIdsAtCheckpoint.Contains(id);
     }
 
     // チェックポイントをリセット
@@ -60,5 +68,6 @@ public class CheckpointManager : MonoBehaviour
     {
         hasCheckpoint = false;
         defeatedChochinIds.Clear();
+        chochinIdsAtCheckpoint.Clear();
     }
 }

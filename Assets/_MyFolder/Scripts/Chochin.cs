@@ -65,18 +65,13 @@ public class Chochin : MonoBehaviour, IResettable
     void WavyMove()
     {
         timeCounter += Time.deltaTime;
-
-        // 1. 左右の動き：これを極端に遅くすることで、上下の波が目立ちます
+        
         float x = startPosition.x + Mathf.Sin(timeCounter * moveSpeed) * moveRange;
 
-        // 2. 上下の動き：Amplitude（高さ）を大きくし、Frequency（速さ）を抑える
-        // ここで「激しいけれどゆっくり」を表現します
         float y = startPosition.y + Mathf.Sin(timeCounter * waveFrequency) * waveAmplitude;
 
         transform.position = new Vector3(x, y, transform.position.z);
 
-        // 3. 視覚的演出：波の頂点で少し「タメ」を作るような回転
-        // 波の動き（Sin）に合わせて、提灯の角度を大きく揺らします
         float tilt = Mathf.Cos(timeCounter * waveFrequency) * 20f; // 20度くらい大きく揺らす
         transform.rotation = Quaternion.Euler(0, 0, tilt);
     }
@@ -174,22 +169,32 @@ public class Chochin : MonoBehaviour, IResettable
             yield return new WaitForSeconds(ascendInterval);
         }
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
-    }
 
-    // 倒された時にCheckpointManagerに登録
-    void OnDestroy()
-    {
-        if (isDead && CheckpointManager.instance != null)
+        // CheckpointManagerに登録 
+        if (CheckpointManager.instance != null)
         {
             CheckpointManager.instance.RegisterDefeatedChochin(
                 gameObject.GetInstanceID());
         }
+
+        // Destroyの代わりに非表示
+        gameObject.SetActive(false);
     }
+
+    // 倒された時にCheckpointManagerに登録
+    //void OnDestroy()
+    //{
+    //    if (isDead && CheckpointManager.instance != null)
+    //    {
+    //        CheckpointManager.instance.RegisterDefeatedChochin(
+    //            gameObject.GetInstanceID());
+    //    }
+    //}
 
     // 初期化処理
     public void ResetChochin()
     {
+        StopAllCoroutines();
         currentState = State.Normal;
         isDead = false;
         timeCounter = 0f;
@@ -211,10 +216,12 @@ public class Chochin : MonoBehaviour, IResettable
             rb.bodyType = RigidbodyType2D.Kinematic;
             rb.linearVelocity = Vector2.zero;
         }
+
+        gameObject.SetActive(true);
     }
 
     public void ResetObject()
     {
-        ResetChochin();
+        //ResetChochin();
     }
 }
