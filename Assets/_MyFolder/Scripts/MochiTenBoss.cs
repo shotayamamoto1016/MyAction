@@ -21,6 +21,9 @@ public class MochiTenBoss : MonoBehaviour
     public Sprite[] floatSprites;       // 浮遊中の3枚
     public float flyAnimInterval = 0.2f;
 
+    [Header("アニメーション管理")]
+    private int floatAnimIndex = 0; // クラス変数として管理
+
     [Header("トゲ攻撃設定")]
     public float spikeAttackInterval = 10f;
     public Sprite[] spikeAttackSprites; // 4枚・ループなし
@@ -150,14 +153,25 @@ public class MochiTenBoss : MonoBehaviour
     // floatCenterPosのX座標まで、floatSpeedに応じた速度で戻る
     IEnumerator ReturnToCenterX()
     {
+        float animTimer = 0f;
+
         while (Mathf.Abs(transform.position.x - floatCenterPos.x) > 0.05f)
         {
             float newX = Mathf.MoveTowards(
                 transform.position.x, floatCenterPos.x,
-                floatSpeed * 2f * Time.deltaTime); 
+                floatSpeed * 2f * Time.deltaTime);
 
             transform.position = new Vector3(
                 newX, transform.position.y, transform.position.z);
+
+            animTimer += Time.deltaTime;
+            if (animTimer >= flyAnimInterval && floatSprites.Length > 0)
+            {
+                animTimer = 0f;
+                spriteRenderer.sprite = floatSprites[floatAnimIndex];
+                floatAnimIndex = (floatAnimIndex + 1) % floatSprites.Length;
+            }
+
             yield return null;
         }
 
@@ -168,10 +182,8 @@ public class MochiTenBoss : MonoBehaviour
     IEnumerator FloatLoop()
     {
         float waveTimer = 0f;
-        int animIndex = 0;
         float animTimer = 0f;
 
-        // floatCenterPosを基準にする
         floatCenterPos = new Vector3(
             transform.position.x, transform.position.y, transform.position.z);
 
@@ -187,8 +199,8 @@ public class MochiTenBoss : MonoBehaviour
             if (animTimer >= flyAnimInterval && floatSprites.Length > 0)
             {
                 animTimer = 0f;
-                spriteRenderer.sprite = floatSprites[animIndex];
-                animIndex = (animIndex + 1) % floatSprites.Length;
+                spriteRenderer.sprite = floatSprites[floatAnimIndex]; 
+                floatAnimIndex = (floatAnimIndex + 1) % floatSprites.Length;
             }
 
             yield return null;
