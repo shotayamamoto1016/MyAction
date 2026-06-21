@@ -364,9 +364,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.07623567, y: -0.93988645}
-  m_Size: {x: 4.403931, y: 3.4217343}
-  m_Direction: 1
+  m_Offset: {x: 0.113, y: 0.11}
+  m_Size: {x: 4.456, y: 5.52}
+  m_Direction: 0
 --- !u!4 &40695691
 Transform:
   m_ObjectHideFlags: 0
@@ -2693,75 +2693,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.72, y: 0.12}
   m_EdgeRadius: 0
---- !u!1 &285935042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 285935044}
-  - component: {fileID: 285935043}
-  m_Layer: 0
-  m_Name: HeadCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!70 &285935043
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285935042}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.042310502, y: 1.8289647}
-  m_Size: {x: 2.5072334, y: 2.2870595}
-  m_Direction: 1
---- !u!4 &285935044
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285935042}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 898180674}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295880750
 GameObject:
   m_ObjectHideFlags: 0
@@ -16205,19 +16136,80 @@ MonoBehaviour:
   spikeTraps: []
   spikeWarningTime: 2
   spikeUpTime: 1.5
-  stompStartTimeMin: 40
-  stompStartTimeMax: 50
+  stompStartTimeMin: 15
+  stompStartTimeMax: 20
   stompSprites:
   - {fileID: -7926618163579264488, guid: 292091348400f624daa6770602764863, type: 3}
   - {fileID: -8176119265043032681, guid: 292091348400f624daa6770602764863, type: 3}
-  - {fileID: -2042782962715733751, guid: e2c93dac9cfd3bb4693e673a1883ec2f, type: 3}
+  - {fileID: 5484447978333362926, guid: 10fd989ebbebec246bec008cedc14440, type: 3}
   stompAnimInterval: 0.15
   stompSpeed: 12
   stompStunDuration: 3
-  landingDelayBeforeSprite3: 0.3
-  headCollider: {fileID: 285935043}
+  landingDelayBeforeSprite3: 0.01
+  stompGroundOffset: -1.8
+  stompStunDurationFirst: 0.5
   bodyCollider: {fileID: 40695690}
   groundManager: {fileID: 1934795498}
+  colliderObject: {fileID: 40695691}
+  colliderLocalPosFloat: {x: 0.113, y: 0.11}
+  colliderSizeFloat: {x: 4.456, y: 5.52}
+  colliderDirectionFloat: 0
+  colliderLocalPosStomp: {x: 0.404, y: -0.234}
+  colliderSizeStomp: {x: 4.566, y: 3.22}
+  colliderDirectionStomp: 1
+  maxHitCount: 3
+  hitSprites:
+  - {fileID: 4368329254124754218, guid: 10fd989ebbebec246bec008cedc14440, type: 3}
+  - {fileID: -4903592500646112053, guid: 5c4deb48920e93445885e9d0aedf1767, type: 3}
+  - {fileID: 3989192773482100861, guid: 5c4deb48920e93445885e9d0aedf1767, type: 3}
+  - {fileID: -9171361074902708891, guid: 5c4deb48920e93445885e9d0aedf1767, type: 3}
+  hitAnimInterval: 0.5
+  hitLoopDuration: 4
+  hitLoopInterval: 0.6
+  hitSpriteOffsetY: 1.5
+  riseStartOffsetY: 1
+  angryColorTint: {r: 1, g: 0.41320753, b: 0.41320753, a: 1}
+  defeatSitOffset: {x: 0, y: 1.1}
+  defeatSitSprites:
+  - {fileID: 4368329254124754218, guid: 10fd989ebbebec246bec008cedc14440, type: 3}
+  - {fileID: 6963450176590808031, guid: 3257f91e6a8ef844f8ab1d7b8733ac30, type: 3}
+  defeatSitAnimInterval: 0.75
+  defeatSitHoldTime: 4
+  defeatAscendSprites:
+  - {fileID: -8477498391728375103, guid: b0323337172a3b7458fa8b2e8e0852b7, type: 3}
+  - {fileID: -9040507540847124759, guid: b0323337172a3b7458fa8b2e8e0852b7, type: 3}
+  - {fileID: 1685819286833770213, guid: b0323337172a3b7458fa8b2e8e0852b7, type: 3}
+  defeatAscendAnimInterval: 1
+  defeatAscendSpeed: 2
+  defeatFadeDuration: 2
+  riseSpeedHP3: 2
+  riseSpeedHP2: 2.5
+  riseSpeedHP1: 3
+  floatSpeedHP3: 1
+  floatSpeedHP2: 1.5
+  floatSpeedHP1: 2
+  spikeAttackIntervalHP3: 10
+  spikeAttackIntervalHP2: 8
+  spikeAttackIntervalHP1: 7
+  spikeWarningTimeHP3: 2
+  spikeWarningTimeHP2: 1.75
+  spikeWarningTimeHP1: 1.5
+  spikeUpTimeHP3: 1.5
+  spikeUpTimeHP2: 1.75
+  spikeUpTimeHP1: 2
+  stompStartTimeMinHP3: 40
+  stompStartTimeMinHP2: 45
+  stompStartTimeMinHP1: 50
+  stompStartTimeMaxHP3: 50
+  stompStartTimeMaxHP2: 55
+  stompStartTimeMaxHP1: 60
+  stompSpeedHP3: 12
+  stompSpeedHP2: 14.5
+  stompSpeedHP1: 17
+  spikeActiveCountHP3: 6
+  spikeActiveCountHP2: 7
+  spikeActiveCountHP1: 8
+  enableDebugKey: 0
 --- !u!212 &898180673
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16286,7 +16278,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 285935044}
   - {fileID: 40695691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24042,7 +24033,7 @@ MonoBehaviour:
   - {fileID: 478631787}
   blocksToCollapse: 20
   remainingBlockCount: 10
-  spikeActiveCount: 8
+  spikeActiveCount: 6
   collapseInterval: 0.15
 --- !u!4 &1934795499
 Transform:
