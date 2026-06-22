@@ -14,6 +14,8 @@ public class CheckpointManager : MonoBehaviour
     // チェックポイント通過時の提灯のIDを記録
     private HashSet<int> chochinIdsAtCheckpoint = new HashSet<int>();
 
+    private bool isBossCheckpoint = false;
+
     void Awake()
     {
         if (instance == null)
@@ -27,15 +29,17 @@ public class CheckpointManager : MonoBehaviour
     }
 
     // チェックポイントを設定
-    public void SetCheckpoint(Vector3 position)
+    public void SetCheckpoint(Vector3 position, bool isBoss = false)
     {
         checkpointPosition = position;
         hasCheckpoint = true;
-
-        // チェックポイント通過時点での倒済み提灯IDを記録
+        isBossCheckpoint = isBoss; 
         chochinIdsAtCheckpoint = new HashSet<int>(defeatedChochinIds);
+    }
 
-        Debug.Log("チェックポイント設定: " + position);
+    public bool IsBossCheckpoint()
+    {
+        return isBossCheckpoint;
     }
 
     // チェックポイントがあるか確認

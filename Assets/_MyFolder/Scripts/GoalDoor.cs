@@ -113,6 +113,12 @@ public class GoalDoor : MonoBehaviour
         // 少し待ってからシーン移行
         yield return new WaitForSeconds(0.5f);
 
+        // 次のステージの扉を表示するためにフラグを立てる
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.isComingFromGoal = true;
+        }
+
         SceneManager.LoadScene(nextSceneName);
     }
 }

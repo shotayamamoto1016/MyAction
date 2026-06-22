@@ -90398,7 +90398,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9999995, y: -5, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93540,7 +93540,7 @@ Transform:
   m_GameObject: {fileID: 1318020884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9999995, y: -5, z: -10}
+  m_LocalPosition: {x: -6.9999995, y: -2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94829,7 +94829,7 @@ Transform:
   m_GameObject: {fileID: 1657808916}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -5, z: 0}
+  m_LocalPosition: {x: -10, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -95463,6 +95463,7 @@ MonoBehaviour:
   - {fileID: -2880553776884827996, guid: 53799096a86fead4a9086f75cf4a48b4, type: 3}
   flagAnimInterval: 0.2
   respawnPoint: {fileID: 1672035253}
+  isBeforeBossFlag: 0
 --- !u!61 &1733141302
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -96268,6 +96269,7 @@ MonoBehaviour:
   lifeUI: {fileID: 1601460792}
   vcam: {fileID: 1318020885}
   cameraVerticalOffset: 3.85
+  isComingFromGoal: 0
   seSounds:
   - Name: Block_Break
     Clip: {fileID: 8300000, guid: 6bbc908376853e340bb7228f31a2afd2, type: 3}
@@ -96816,11 +96818,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5660944223523019975, guid: 8a51171049cf5814d9a590e76e34ea64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.07
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 5660944223523019975, guid: 8a51171049cf5814d9a590e76e34ea64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.36
+      value: 7.935
       objectReference: {fileID: 0}
     - target: {fileID: 5660944223523019975, guid: 8a51171049cf5814d9a590e76e34ea64, type: 3}
       propertyPath: m_LocalPosition.z

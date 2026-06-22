@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MochiTenBoss : MonoBehaviour
+public class MochiTenBoss : MonoBehaviour, IResettable
 {
     [Header("起動設定")]
     public float activateRangeX = 8f;   // ぽんたとの距離でボス戦開始
@@ -149,6 +149,9 @@ public class MochiTenBoss : MonoBehaviour
     private enum State { Waiting, Rising, Floating, SpikeAttack, StompAttack, Hit, Stunned, Dead }
     private State currentState = State.Waiting;
 
+    [Header("撃破後の地面出現")]
+    public PostBossGroundReveal postBossGroundReveal;
+
     [Header("デバッグ用")]
     public bool enableDebugKey = true; // テスト時のみtrueにする
 
@@ -249,6 +252,13 @@ public class MochiTenBoss : MonoBehaviour
         {
             isBattleStarted = true;
             nextStompTime = Random.Range(stompStartTimeMin, stompStartTimeMax);
+
+            // ボスBGMに切り替え
+            if (GSound.Instance != null)
+            {
+                GSound.Instance.PlayBgm(SoundData.BgmType.Boss.ToString(), true);
+            }
+
             StartCoroutine(RiseSequence());
         }
     }
@@ -685,7 +695,18 @@ public class MochiTenBoss : MonoBehaviour
         // 完全に消える
         gameObject.SetActive(false);
 
-        
+        // 元のBGMに戻す
+        if (GSound.Instance != null)
+        {
+            GSound.Instance.PlayBgm(SoundData.BgmType.Start.ToString(), true);
+        }
+
+        // 隠れていた地面を出現させる 
+        if (postBossGroundReveal != null)
+        {
+            postBossGroundReveal.RevealGround();
+        }
+
         Debug.Log("もち天さま完全に消滅");
     
 
@@ -829,4 +850,52 @@ public class MochiTenBoss : MonoBehaviour
 
         Debug.Log("もち天さま怒りモード！残りHIT: " + remainingHits);
     }
+
+    public void ResetObject()
+    {
+        Debug.Log("MochiTenBoss ResetObject呼ばれた");
+
+        StopAllCoroutines();
+
+        isDead = false;
+        isBattleStarted = false;
+        isAttacking = false;
+        isStunned = false;
+        currentHitCount = 0;
+        stompChainRemaining = 0;
+        isInStompChain = false;
+        battleTimer = 0f;
+        spikeTimer = 0f;
+
+        transform.position = startPosition;
+        floatCenterPos = startPosition;
+
+        currentState = State.Waiting;
+
+        if (riseSprites.Length > 0)
+            spriteRenderer.sprite = riseSprites[0];
+
+        spriteRenderer.color = Color.white;
+
+        if (bodyCollider != null) bodyCollider.enabled = true;
+        SetColliderState(false);
+
+        // ステータスをHP3に戻す
+        riseSpeed = riseSpeedHP3;
+        floatSpeed = floatSpeedHP3;
+        spikeAttackInterval = spikeAttackIntervalHP3;
+        spikeWarningTime = spikeWarningTimeHP3;
+        spikeUpTime = spikeUpTimeHP3;
+        stompStartTimeMin = stompStartTimeMinHP3;
+        stompStartTimeMax = stompStartTimeMaxHP3;
+        stompSpeed = stompSpeedHP3;
+
+        if (groundManager != null)
+        {
+            groundManager.spikeActiveCount = spikeActiveCountHP3;
+        }
+
+        gameObject.SetActive(true);
+    }
+
 }

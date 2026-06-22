@@ -18,10 +18,23 @@ public class SpikeTrap : MonoBehaviour, IResettable
     private Collider2D spikeCollider;
     private bool isCollapsed = false;
     private Vector3 startPosition;
+    private bool isInitialized = false;
 
-    void Start()
+    void Awake() 
     {
-        if (blockRenderer != null) originalColor = blockRenderer.color;
+        Initialize();
+    }
+
+    void Initialize()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+
+        if (blockRenderer != null)
+        {
+            originalColor = blockRenderer.color;
+        }
+
         spikeCollider = spikeVisual != null ?
             spikeVisual.GetComponent<Collider2D>() : null;
         startPosition = transform.position;
@@ -33,6 +46,11 @@ public class SpikeTrap : MonoBehaviour, IResettable
     public IEnumerator ActivateSequence(float warningTime, float spikeTime)
     {
         if (isCollapsed) yield break;
+
+        // コルーチン開始前に状態をリセット 
+        if (spikeVisual != null) spikeVisual.SetActive(false);
+        if (spikeCollider != null) spikeCollider.enabled = false;
+        if (blockRenderer != null) blockRenderer.color = originalColor;
 
         if (blockRenderer != null) blockRenderer.color = warningColor;
         yield return new WaitForSeconds(warningTime);
@@ -100,11 +118,19 @@ public class SpikeTrap : MonoBehaviour, IResettable
 
     public void ResetObject()
     {
+        StopAllCoroutines(); // 進行中のコルーチンを止める
+
         isCollapsed = false;
         transform.position = startPosition;
         gameObject.SetActive(true);
 
-        if (blockRenderer != null) blockRenderer.color = originalColor;
+        // originalColorが正しく取得できているか確認して色を戻す
+        if (blockRenderer != null)
+        {
+            if (!isInitialized) Initialize(); // 念のため初期化
+            blockRenderer.color = originalColor;
+        }
+
         if (spikeVisual != null) spikeVisual.SetActive(false);
         if (spikeCollider != null) spikeCollider.enabled = false;
     }

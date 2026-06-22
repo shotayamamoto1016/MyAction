@@ -57,6 +57,9 @@ public class StageResetManager : MonoBehaviour
             // Chochinは個別処理済みなのでスキップ
             if (obj.GetComponent<Chochin>() != null) continue;
 
+            // SpikeTrapはBossStageGroundManagerが管理するのでスキップ
+            if (obj.GetComponent<SpikeTrap>() != null) continue;
+
             if (obj is IResettable resettable)
             {
                 resettable.ResetObject();

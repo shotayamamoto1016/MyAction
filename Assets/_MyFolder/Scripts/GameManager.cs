@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera vcam;
     public float cameraVerticalOffset = 1.5f;
 
+    [Header("ステージ遷移フラグ")]
+    public bool isComingFromGoal = false; // ゴール扉から来たかどうか
+
     // 初回起動かどうかの判定フラグ 
     private bool isFirstLoad = true;
 
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     [Header("サウンドデータ登録")]
     public SoundDataEntry[] seSounds;  // SEのリスト
+
+    private bool isBossCheckpoint = false;
 
     void Awake()
     {
@@ -66,8 +71,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // ステージ1のBGMを再生
-        PlayStageBGM();
+        //// ステージ1のBGMを再生
+        //PlayStageBGM();
     }
 
     void InitializeSounds()
@@ -89,6 +94,11 @@ public class GameManager : MonoBehaviour
     // シーンが読み込まれた直後に呼ばれる
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "02_Stage1" || scene.name == "03_Stage2" || scene.name == "04_Stage3" || scene.name == "05_Stage4" || scene.name == "06_Stage5")
+        {
+            PlayStageBGM();
+        }
+
         //最初のゲーム開始時は何もしない
         if (isFirstLoad)
         {
@@ -184,41 +194,18 @@ public class GameManager : MonoBehaviour
             player.transform.position = targetPos;
             player.GetComponent<PlayerController>().ResetPlayer();
 
-            // 復活したらポーズボタンを再び表示する
+            // 復活したらポーズボタンを再び表示する(条件分岐)
             if (PauseManager.instance != null)
             {
-                PauseManager.instance.SetMenuButtonActive(true);
+                bool isBossCheckpoint = CheckpointManager.instance != null &&
+                    CheckpointManager.instance.IsBossCheckpoint();
+
+                PauseManager.instance.SetMenuButtonActive(!isBossCheckpoint);
             }
 
             // カメラ処理をコルーチンで実行 
             StartCoroutine(ResetCamera(player.transform, targetPos));
 
-            //// ワープ処理
-            //if (vcam != null)
-            //{
-            //    // 一度Followを外す
-            //    vcam.Follow = null;
-
-            //    // カメラをぽんたの位置に強制移動
-            //    Vector3 cameraTargetPos = new Vector3(
-            //        targetPos.x,
-            //        targetPos.y + cameraVerticalOffset,
-            //        vcam.transform.position.z);
-
-            //    vcam.transform.position = cameraTargetPos;
-            //    vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
-
-            //    // Followを再セット
-            //    vcam.Follow = player.transform;
-            //}
-
-            //// 復活したらポーズボタンを再び表示する
-            ////if (PauseManager.instance != null)
-            ////{
-            ////    PauseManager.instance.SetMenuButtonActive(true);
-            ////}
-
-            //StartCoroutine(Fade(0));
         }
     }
 
@@ -294,4 +281,6 @@ public class GameManager : MonoBehaviour
         string bgmName = SoundData.BgmType.Start.ToString();
         GSound.Instance.PlayBgm(bgmName, true);
     }
+
+
 }

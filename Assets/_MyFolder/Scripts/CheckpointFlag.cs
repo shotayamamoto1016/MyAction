@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CheckpointFlag : MonoBehaviour
 {
@@ -10,8 +11,13 @@ public class CheckpointFlag : MonoBehaviour
     [Header("チェックポイント設定")]
     public Transform respawnPoint; // ぽんたが復活する位置
 
+    [Header("ボス戦前フラグ設定")]
+    public bool isBeforeBossFlag = false;
+
     private SpriteRenderer flagRenderer;
     private bool isActivated = false;
+
+    
 
     void Start()
     {
@@ -49,7 +55,15 @@ public class CheckpointFlag : MonoBehaviour
         // チェックポイントを保存
         if (respawnPoint != null)
         {
-            CheckpointManager.instance.SetCheckpoint(respawnPoint.position);
+            CheckpointManager.instance.SetCheckpoint(respawnPoint.position, isBeforeBossFlag);
+        }
+
+        // ボス戦前の旗ならPauseボタンを非表示にする 
+        if (isBeforeBossFlag && PauseManager.instance != null)
+        {
+            PauseManager.instance.SetMenuButtonActive(false);
         }
     }
+
+    
 }
