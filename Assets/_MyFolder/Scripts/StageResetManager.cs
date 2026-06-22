@@ -48,6 +48,14 @@ public class StageResetManager : MonoBehaviour
             }
         }
 
+        KageBoshi[] allKageBoshi = FindObjectsByType<KageBoshi>(
+            FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var kage in allKageBoshi)
+        {
+            kage.ResetObject(); // 影法師を初期位置に戻す
+        }
+
         // IResettableを実装している全オブジェクトをリセット
         MonoBehaviour[] allObjects = FindObjectsByType<MonoBehaviour>(
             FindObjectsInactive.Include, FindObjectsSortMode.None);

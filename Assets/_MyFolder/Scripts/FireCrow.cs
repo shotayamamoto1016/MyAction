@@ -176,9 +176,10 @@ public class FireCrow : MonoBehaviour, IResettable
 
         if (player.isInvincible)
         {
-            isDead = true; 
-            StopCoroutine(nameof(AttackSequence)); // AttackSequenceだけ止める
-            StartCoroutine(DeathAnimation());
+           // isDead = true;
+            HandleDeath();
+            //StopCoroutine(nameof(AttackSequence)); // AttackSequenceだけ止める
+            //StartCoroutine(DeathAnimation());
             return;
         }
 
@@ -187,11 +188,11 @@ public class FireCrow : MonoBehaviour, IResettable
             // 上から踏まれた
             if (contact.normal.y < -0.5f)
             {
-                isDead = true; 
-                StopCoroutine(nameof(AttackSequence));
+                //isDead = true; 
+                //StopCoroutine(nameof(AttackSequence));
 
                 // カラスを倒す
-                StartCoroutine(DeathAnimation());
+                //StartCoroutine(DeathAnimation());
 
                 // ぽんたを跳ね上げる
                 Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
@@ -200,6 +201,8 @@ public class FireCrow : MonoBehaviour, IResettable
                     playerRb.linearVelocity = new Vector2(
                         playerRb.linearVelocity.x, 5f);
                 }
+
+                HandleDeath(); // すべてのコルーチンを止めて昇天
                 return;
             }
         }
@@ -210,14 +213,22 @@ public class FireCrow : MonoBehaviour, IResettable
             player.Die();
         }
 
+        // 攻撃を止めて死亡演出開始
+        void HandleDeath()
+        {
+            isDead = true;
+            isAttacking = false; // 攻撃中フラグを下ろす
+
+            StopAllCoroutines();
+
+            // 死亡アニメーションを開始
+            StartCoroutine(DeathAnimation());
+        }
     }
 
     // 死亡アニメーション
     IEnumerator DeathAnimation()
     {
-        //isDead = true;
-        //StopAllCoroutines();
-
         // Colliderを無効化
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;

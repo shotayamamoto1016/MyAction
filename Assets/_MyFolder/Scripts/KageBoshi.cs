@@ -121,25 +121,6 @@ public class KageBoshi : MonoBehaviour, IResettable
             moveInput * moveSpeed,
             rb.linearVelocity.y);
 
-        // 向きを変える
-        //if (moveInput > 0 && !facingRight)
-        //{
-        //    facingRight = true;
-
-        //    transform.localScale = new Vector3(
-        //        -Mathf.Abs(transform.localScale.x),
-        //        transform.localScale.y,
-        //        transform.localScale.z);
-        //}
-        //else if (moveInput < 0 && facingRight)
-        //{
-        //    facingRight = false;
-
-        //    transform.localScale = new Vector3(
-        //        Mathf.Abs(transform.localScale.x),
-        //        transform.localScale.y,
-        //        transform.localScale.z);
-        //}
 
         // ジャンプ：ぽんたが上にいて地面にいる場合はジャンプ
         if (diffY > 1f && isGrounded)
