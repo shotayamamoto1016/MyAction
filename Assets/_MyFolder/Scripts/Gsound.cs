@@ -194,6 +194,18 @@ public class GSound
     //BGM‚Ì‰¹—Ê•ÏX
     public void bgmVolumeChange(float volume)
     {
-        GetAudioSource(Type.bgm).volume = volume;
+        bgmVolume = volume;
+        AudioSource source = GetAudioSource(Type.bgm);
+        if (source != null)
+        {
+            source.volume = bgmVolume;
+        }
+        PlayerPrefs.SetFloat("BGM_VOLUME", volume); // ”’l‚ğ•Û‘¶
+        PlayerPrefs.Save();
+    }
+
+    public void seVolumeChange(float volume)
+    {
+        seVolume = volume;
     }
 }
