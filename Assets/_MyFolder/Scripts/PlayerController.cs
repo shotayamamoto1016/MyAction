@@ -235,7 +235,14 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-                // 通常時は上から踏んだか判定
+            // カエルがクラクラ中はぽんたが死亡しない 
+            MakikomiFrog frog = collision.gameObject.GetComponent<MakikomiFrog>();
+            if (frog != null && frog.isDizzy)
+            {
+                return;
+            }
+
+            // 通常時は上から踏んだか判定
             foreach (ContactPoint2D contact in collision.contacts)
              {
                 if (contact.normal.y > 0.5f)

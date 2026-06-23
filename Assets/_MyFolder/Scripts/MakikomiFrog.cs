@@ -34,6 +34,33 @@ public class MakikomiFrog : MonoBehaviour, IResettable
     public float tongueAnimInterval = 0.15f;
     public float tongue1MoveSpeed = 1.5f;
 
+    [Header("被弾設定")]
+    public Sprite[] dizzySprites;           // クラクラアニメーション画像
+    public float dizzyAnimInterval = 0.2f;
+    public float dizzyDuration = 3f;        // クラクラ状態の時間
+
+    [Header("撃破演出")]
+    public Sprite defeatSprite1;            // 撃破時1枚目
+    public Sprite defeatSprite2;            // 撃破時2枚目（フェードアウト）
+    public float defeatHoldTime = 3f;       // 1枚目を表示する時間
+    public float defeatAscendSpeed = 2f;    // 上昇速度
+    public float defeatFadeDuration = 1f;   // フェードアウト時間
+
+    [Header("被弾後ステータス")]
+    public float jumpForceAfterHit = 10f;
+    public float moveSpeedAfterHit = 6f;
+    public float tongue1MoveSpeedAfterHit = 0.25f;
+
+    [Header("オフセット設定")]
+    public Vector3 dizzyOffset = Vector3.zero;   // クラクラ時のオフセット
+    public Vector3 defeatOffset = Vector3.zero;  // 撃破時1枚目のオフセット
+
+    [Header("撃破後の壁崩壊")]
+    public FrogDefeatWall defeatWall;
+
+    private int hitCount = 0;               // 被弾回数
+    public bool isDizzy = false;           // クラクラ状態
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Transform player;
@@ -270,6 +297,9 @@ public class MakikomiFrog : MonoBehaviour, IResettable
         if (isDead) return;
         if (!collision.gameObject.CompareTag("Player")) return;
 
+        // クラクラ中はお互いダメージなし
+        if (isDizzy) return;
+
         PlayerController playerController =
             collision.gameObject.GetComponent<PlayerController>();
         if (playerController == null) return;
@@ -285,8 +315,8 @@ public class MakikomiFrog : MonoBehaviour, IResettable
         {
             if (contact.normal.y < -0.5f)
             {
-                isDead = true;
-                gameObject.SetActive(false);
+                //isDead = true;
+                //gameObject.SetActive(false);
 
                 Rigidbody2D playerRb =
                     collision.gameObject.GetComponent<Rigidbody2D>();
@@ -295,6 +325,23 @@ public class MakikomiFrog : MonoBehaviour, IResettable
                     playerRb.linearVelocity = new Vector2(
                         playerRb.linearVelocity.x, 5f);
                 }
+
+                hitCount++;
+
+                if (hitCount >= 2)
+                {
+                    // 2回目：撃破
+                    isDead = true;
+                    StopAllCoroutines();
+                    StartCoroutine(DefeatSequence());
+                }
+                else
+                {
+                    // 1回目：クラクラ状態
+                    StopAllCoroutines();
+                    StartCoroutine(DizzySequence());
+                }
+
                 return;
             }
             else
@@ -311,10 +358,110 @@ public class MakikomiFrog : MonoBehaviour, IResettable
         }
     }
 
+    IEnumerator DizzySequence()
+    {
+        isDizzy = true;
+        rb.linearVelocity = Vector2.zero;
+
+        // クラクラ時のOffsetを適用する
+        Vector3 originalPos = transform.position;
+        transform.position = new Vector3(
+            originalPos.x + dizzyOffset.x,
+            originalPos.y + dizzyOffset.y,
+            originalPos.z + dizzyOffset.z);
+
+        // クラクラアニメーション
+        float elapsed = 0f;
+        int animIndex = 0;
+        float animTimer = 0f;
+
+        while (elapsed < dizzyDuration && !isDead)
+        {
+            animTimer += Time.deltaTime;
+            if (animTimer >= dizzyAnimInterval && dizzySprites.Length > 0)
+            {
+                animTimer = 0f;
+                spriteRenderer.sprite = dizzySprites[animIndex];
+                animIndex = (animIndex + 1) % dizzySprites.Length;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        // Offsetを元に戻す
+        transform.position = originalPos;
+
+        isDizzy = false;
+
+        if (!isDead)
+        {
+            // ステータスを強化して再開
+            jumpForce = jumpForceAfterHit;
+            moveSpeed = moveSpeedAfterHit;
+            tongue1MoveSpeed = tongue1MoveSpeedAfterHit;
+
+            StartCoroutine(MainLoop());
+        }
+    }
+
+    IEnumerator DefeatSequence()
+    {
+        isDead = true;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.linearVelocity = Vector2.zero;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        // 撃破時1枚目のOffsetを適用 
+        transform.position = new Vector3(
+            transform.position.x + defeatOffset.x,
+            transform.position.y + defeatOffset.y,
+            transform.position.z + defeatOffset.z);
+
+        // 1枚目を表示してdefeatHoldTime秒キープ
+        if (defeatSprite1 != null)
+        {
+            spriteRenderer.sprite = defeatSprite1;
+        }
+        yield return new WaitForSeconds(defeatHoldTime);
+
+        // 壁を崩壊させる 
+        if (defeatWall != null)
+        {
+            defeatWall.CollapseWall();
+        }
+
+        // 2枚目に切り替えて上昇しながらフェードアウト
+        if (defeatSprite2 != null)
+        {
+            spriteRenderer.sprite = defeatSprite2;
+        }
+
+        float fadeElapsed = 0f;
+        Color startColor = spriteRenderer.color;
+
+        while (fadeElapsed < defeatFadeDuration)
+        {
+            transform.position += Vector3.up * defeatAscendSpeed * Time.deltaTime;
+
+            float alpha = Mathf.Lerp(startColor.a, 0f, fadeElapsed / defeatFadeDuration);
+            spriteRenderer.color = new Color(
+                startColor.r, startColor.g, startColor.b, alpha);
+
+            fadeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        gameObject.SetActive(false);
+    }
+
     public void ResetObject()
     {
         StopAllCoroutines();
         isDead = false;
+        isDizzy = false;
+        hitCount = 0;
         movingLeft = true;
         flipCoolTime = 0f;
         transform.position = startPosition;
@@ -322,7 +469,18 @@ public class MakikomiFrog : MonoBehaviour, IResettable
             Mathf.Abs(transform.localScale.x),
             transform.localScale.y,
             transform.localScale.z);
+        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.linearVelocity = Vector2.zero;
+        spriteRenderer.color = Color.white;
+
+        // ステータスを初期値に戻す 
+        jumpForce = 8f;
+        moveSpeed = 3f;
+        tongue1MoveSpeed = 1.5f;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
         gameObject.SetActive(true);
 
         if (idleSprites.Length > 0)

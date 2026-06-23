@@ -293,3 +293,19 @@ MonoBehaviour:
   - {fileID: 5624377424736179607, guid: ba6aa89983b17a644a38842ca8390c0f, type: 3}
   tongueAnimInterval: 0.2
   tongue1MoveSpeed: 1.5
+  dizzySprites:
+  - {fileID: -5505260550719655648, guid: faeb255aebef3964db36a11b7d8ed1fb, type: 3}
+  - {fileID: 5464893437606402522, guid: faeb255aebef3964db36a11b7d8ed1fb, type: 3}
+  - {fileID: -1197692638518537676, guid: faeb255aebef3964db36a11b7d8ed1fb, type: 3}
+  dizzyAnimInterval: 0.2
+  dizzyDuration: 3
+  defeatSprite1: {fileID: 6140497279989867579, guid: bc05b1c64cbf0654b8aa8ff7dff3aab9, type: 3}
+  defeatSprite2: {fileID: -6159495278112880868, guid: ecd57977aa435c44099e7bf19d7a49c2, type: 3}
+  defeatHoldTime: 3
+  defeatAscendSpeed: 2
+  defeatFadeDuration: 1
+  jumpForceAfterHit: 10
+  moveSpeedAfterHit: 6
+  tongue1MoveSpeedAfterHit: 0.25
+  dizzyOffset: {x: 0, y: 0, z: 0}
+  defeatOffset: {x: 0, y: -0.5, z: 0}
