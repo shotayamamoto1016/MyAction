@@ -259,17 +259,25 @@ public class FireCrow : MonoBehaviour, IResettable
     public void ResetObject()
     {
         StopAllCoroutines();
+        isDead = false;
         isAttacking = false;
         isCooldown = false;
         cooldownTimer = 0f;
         waveTimer = 0f;
+        flyAnimTimer = 0f;
+        // “–‚½‚è”»’è‚ÆŒ©‚½–Ú‚ð•œŠˆ‚³‚¹‚é
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
         transform.position = startPosition;
-        gameObject.SetActive(true);
+        
 
         if (flySprites.Length > 0)
         {
             spriteRenderer.sprite = flySprites[0];
         }
+
+        gameObject.SetActive(true);
     }
 
     void OnDrawGizmos()

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim; // アニメーター用
+    private SpriteRenderer spriteRenderer;
     private bool isGrounded;
     private bool facingRight = true;
 
@@ -46,8 +47,8 @@ public class PlayerController : MonoBehaviour
     // 入力を無効化するフラグ
     public bool isInputDisabled = false;
 
-    //private float originalMoveSpeed;
-    //private float originalJumpForce;
+    private Coroutine invincibilityCoroutine; // コルーチンを止めるための参照
+    private GameObject currentSparkles;       // エフェクトの参照
 
 
     void Start()
@@ -55,6 +56,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         anim = GetComponent<Animator>(); // 開始時にAnimatorを取得
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         // 元の値を保存
         //originalMoveSpeed = moveSpeed;
@@ -156,6 +159,10 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         if (isDead ) return;
+
+        // 死んだら無敵状態をリセットする
+        StopInvincibilityManually();
+
         StartCoroutine(DeathAnimation());
     }
 
@@ -195,6 +202,7 @@ public class PlayerController : MonoBehaviour
         isDead = false;
         GetComponent<Collider2D>().enabled = true;
         anim.enabled = true;
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
         // Animatorを再起動
         anim.Play("Ponta_Idle", 0, 0);
         rb.linearVelocity = Vector2.zero;
@@ -212,7 +220,7 @@ public class PlayerController : MonoBehaviour
             if (isInvincible)
             {
                 // 無敵なら敵を即死させる
-                Destroy(collision.gameObject);
+                collision.gameObject.SetActive(false);
                 Debug.Log("無敵パワーで敵を倒した！");
                 return;
             }
@@ -266,7 +274,7 @@ public class PlayerController : MonoBehaviour
             if (isInvincible)
             {
                 // トリガー接触した敵（弾など）も消滅させる
-                Destroy(collision.gameObject);
+                collision.gameObject.SetActive(false);
                 Debug.Log("無敵パワーでトリガー接触した敵を倒した！");
             }
             else
@@ -431,9 +439,13 @@ public class PlayerController : MonoBehaviour
     // 金色キノコを取った時に呼ばれる
     public void StartInvincibility()
     {
-        // すでに無敵なら一度リセットして時間を上書き
-        StopCoroutine("InvincibilityRoutine");
-        StartCoroutine("InvincibilityRoutine");
+        // 既に動いている無敵コルーチンがあれば止める
+        if (invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+        }
+        StopInvincibilityManually();
+        invincibilityCoroutine = StartCoroutine(InvincibilityRoutine());
     }
 
     IEnumerator InvincibilityRoutine()
@@ -442,32 +454,66 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 6.0f;
         jumpForce = 17.5f;
 
-        // キラキラエフェクトを表示（ぽんたの子オブジェクトとして生成）
-        GameObject sparkles = null;
-        if (sparkleEffectPrefab != null)
+        //キラキラエフェクト表示
+        if (sparkleEffectPrefab != null && currentSparkles == null)
         {
-            sparkles = Instantiate(sparkleEffectPrefab, transform.position, Quaternion.identity, transform);
+            currentSparkles = Instantiate(sparkleEffectPrefab, transform.position, Quaternion.identity, transform);
         }
+
 
         // 無敵中の演出：ぽんたをチカチカさせる、または金色っぽくする
         float timer = 0;
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        //SpriteRenderer sr = GetComponent<SpriteRenderer>();
         while (timer < invincibilityDuration)
         {
             timer += Time.deltaTime;
 
             // 無敵中の色変化
             float lerp = Mathf.PingPong(Time.time * 15f, 1f);
-            sr.color = Color.Lerp(Color.white, new Color(1f, 0.9f, 0f), lerp);
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = Color.Lerp(Color.white, new Color(1f, 0.9f, 0f), lerp);
+            }
             yield return null;
         }
 
-        // 元に戻す
-        sr.color = Color.white;
+        // 終了処理
+        StopInvincibilityManually();
+
+        
+    }
+
+    // 無敵を強制終了させるメソッド
+    void StopInvincibilityManually()
+    {
+        // 現在動いている無敵コルーチンを物理的に止める
+        if (invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+            invincibilityCoroutine = null;
+        }
+
+        // パーティクルを消す
+        if (currentSparkles != null)
+        {
+            ParticleSystem ps = currentSparkles.GetComponent<ParticleSystem>();
+            if (ps != null) ps.Clear();
+            Destroy(currentSparkles);
+            currentSparkles = null;
+        }
+
         isInvincible = false;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.white;
+        }
+
         moveSpeed = 4.5f; // 元の速度に戻す
         jumpForce = 15.0f; // 元のジャンプ力に戻す
-        if (sparkles != null) Destroy(sparkles);
+
+        invincibilityCoroutine = null;
+
+       
     }
 
     // 向きをリセットするメソッド

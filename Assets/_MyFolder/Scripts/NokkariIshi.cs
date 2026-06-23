@@ -84,5 +84,10 @@ public class NokkariIshi : MonoBehaviour, IResettable
         {
             spriteRenderer.sprite = blockSprites[0];
         }
+
+        // コライダーがもし無効化されていたら戻す
+        if (col != null) col.enabled = true;
+
+        gameObject.SetActive(true);
     }
 }

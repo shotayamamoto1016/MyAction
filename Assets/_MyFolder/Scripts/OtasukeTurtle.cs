@@ -241,7 +241,9 @@ public class OtasukeTurtle : MonoBehaviour, IResettable
         gameObject.SetActive(true);
         if (anim != null)
         {
-            anim.Play("Chasing_Idle");
+            anim.Play("Chasing_Idle", 0, 0f);
+            anim.SetBool("isChasing", false);
+            anim.SetFloat("Speed", 0);
         }
             
     }
