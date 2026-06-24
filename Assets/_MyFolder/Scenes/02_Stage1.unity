@@ -192,6 +192,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (30)
@@ -306,6 +310,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (29)
@@ -454,6 +462,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (26)
@@ -1221,6 +1233,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (12)
@@ -1335,6 +1351,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (23)
@@ -1392,6 +1412,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (20)
@@ -90370,6 +90394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (14)
@@ -90502,6 +90530,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (17)
@@ -91839,6 +91871,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (16)
@@ -92159,6 +92195,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (3)
@@ -92499,6 +92539,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (19)
@@ -92595,6 +92639,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (18)
@@ -92766,6 +92814,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (24)
@@ -93047,6 +93099,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (4)
@@ -93264,6 +93320,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (9)
@@ -93603,6 +93663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (8)
@@ -93971,6 +94035,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (2)
@@ -94085,6 +94153,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (10)
@@ -94230,6 +94302,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (13)
@@ -94587,6 +94663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (28)
@@ -94805,6 +94885,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (21)
@@ -95588,6 +95672,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (25)
@@ -95645,6 +95733,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (15)
@@ -95702,6 +95794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (7)
@@ -95765,6 +95861,7 @@ GameObject:
   - component: {fileID: 1657808917}
   - component: {fileID: 1657808922}
   - component: {fileID: 1657808923}
+  - component: {fileID: 1657808924}
   m_Layer: 0
   m_Name: Ponta
   m_TagString: Player
@@ -95969,6 +96066,43 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0315647, y: 2.53}
   m_EdgeRadius: 0
+--- !u!70 &1657808924
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657808916}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 36ab834b76bfbb047bcad6741103de21, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.31484085, y: 1.26838}
+  m_Size: {x: 2.5367815, y: 2.5367815}
+  m_Direction: 0
 --- !u!1001 &1666896965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96298,6 +96432,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (1)
@@ -96716,6 +96854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (27)
@@ -97081,6 +97223,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (22)
@@ -98875,6 +99021,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (11)
@@ -98997,6 +99147,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock

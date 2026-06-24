@@ -86,6 +86,10 @@ public class MakikomiFrog : MonoBehaviour, IResettable
             transform.localScale.y,
             transform.localScale.z);
 
+        // ぽんたに押されないようにする 
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.mass = 100f; 
+
         StartCoroutine(MainLoop());
     }
 
@@ -361,7 +365,10 @@ public class MakikomiFrog : MonoBehaviour, IResettable
     IEnumerator DizzySequence()
     {
         isDizzy = true;
+
+        //移動を完全に止める
         rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
 
         // クラクラ時のOffsetを適用する
         Vector3 originalPos = transform.position;
@@ -377,6 +384,12 @@ public class MakikomiFrog : MonoBehaviour, IResettable
 
         while (elapsed < dizzyDuration && !isDead)
         {
+            // X座標を固定し続ける 
+            transform.position = new Vector3(
+                originalPos.x + dizzyOffset.x,
+                transform.position.y,
+                transform.position.z);
+
             animTimer += Time.deltaTime;
             if (animTimer >= dizzyAnimInterval && dizzySprites.Length > 0)
             {
@@ -390,6 +403,9 @@ public class MakikomiFrog : MonoBehaviour, IResettable
         }
         // Offsetを元に戻す
         transform.position = originalPos;
+
+        // Dynamicに戻す
+        rb.bodyType = RigidbodyType2D.Dynamic;
 
         isDizzy = false;
 

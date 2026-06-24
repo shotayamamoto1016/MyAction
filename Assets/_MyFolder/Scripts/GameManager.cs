@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ResetCamera(Transform playerTransform, Vector3 targetPos)
     {
+        Debug.Log("ResetCamera開始。targetPos: " + targetPos);
         if (vcam == null)
         {
             StartCoroutine(Fade(0));
@@ -228,6 +229,8 @@ public class GameManager : MonoBehaviour
             targetPos.y + cameraVerticalOffset,
             vcam.transform.position.z);
 
+        Debug.Log("カメラ目標位置: " + cameraTargetPos);
+
         vcam.transform.position = cameraTargetPos;
         vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
 
@@ -239,9 +242,14 @@ public class GameManager : MonoBehaviour
 
         // もう1フレーム待つ
         yield return null;
+        yield return null;
 
         // カメラを再度強制移動
         vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+        yield return null;
+        vcam.ForceCameraPosition(cameraTargetPos, Quaternion.identity);
+
+        Debug.Log("ResetCamera完了。カメラ位置: " + vcam.transform.position);
 
         // フェードイン開始
         StartCoroutine(Fade(0));
