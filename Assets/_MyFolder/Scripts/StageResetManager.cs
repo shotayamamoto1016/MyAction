@@ -74,6 +74,11 @@ public class StageResetManager : MonoBehaviour
             }
         }
 
-
+        // 全てのとげ壁をリセットする
+        EndingSpikeWall[] walls = FindObjectsByType<EndingSpikeWall>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var wall in walls)
+        {
+            wall.ResetWall();
+        }
     }
 }

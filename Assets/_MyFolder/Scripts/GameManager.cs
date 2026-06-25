@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
     public float cameraVerticalOffset = 1.5f;
 
     [Header("ステージ遷移フラグ")]
+    public bool isBossDefeated = false; // ボスを倒したか
     public bool isComingFromGoal = false; // ゴール扉から来たかどうか
+
+    [Header("特殊リスタート設定")]
+    public string nextRespawnScene = ""; // 死んだ後に読み込むシーン名
 
     // 初回起動かどうかの判定フラグ 
     private bool isFirstLoad = true;
@@ -108,6 +112,31 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // ゴールから来た場合は、古いチェックポイントへは飛ばさない
+        if (!isComingFromGoal)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null && CheckpointManager.instance != null && CheckpointManager.instance.HasCheckpoint())
+            {
+                Vector3 savedPos = CheckpointManager.instance.GetCheckpointPosition();
+                player.transform.position = savedPos;
+                Debug.Log($"チェックポイント復活: {scene.name} の {savedPos} にワープしました");
+                StartCoroutine(ResetCamera(player.transform, savedPos));
+            }
+        }
+
+        else
+        {
+            if (CheckpointManager.instance != null)
+            {
+                CheckpointManager.instance.ResetCheckpoint();
+            }
+            Debug.Log("ゴールから入室：初期位置からスタートします");
+        }
+
+        // 移動が終わったら、特殊リスタート設定をリセットしておく
+        nextRespawnScene = "";
+
         // 死んだ後のリロード時は、真っ黒な状態からフェードアウト
         if (fadeCanvasGroup != null)
         {
@@ -169,6 +198,13 @@ public class GameManager : MonoBehaviour
     void Respawn()
     {
         if (lifeUI != null) lifeUI.SetActive(false);
+
+        // もし特殊なリスタート先が指定されていたら、そのシーンをロードする
+        if (!string.IsNullOrEmpty(nextRespawnScene))
+        {
+            SceneManager.LoadScene(nextRespawnScene);
+            return; // ここで終了
+        }
 
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)

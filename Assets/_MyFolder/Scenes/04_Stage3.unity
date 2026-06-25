@@ -10560,7 +10560,9 @@ MonoBehaviour:
   lifeUI: {fileID: 191899583}
   vcam: {fileID: 1836668733}
   cameraVerticalOffset: 3.85
+  isBossDefeated: 0
   isComingFromGoal: 0
+  nextRespawnScene: 
   seSounds:
   - Name: Block_Break
     Clip: {fileID: 8300000, guid: 6bbc908376853e340bb7228f31a2afd2, type: 3}

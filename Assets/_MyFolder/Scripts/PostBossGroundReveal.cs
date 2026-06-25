@@ -24,18 +24,28 @@ public class PostBossGroundReveal : MonoBehaviour
             }
         }
 
-        // 最初は全て非表示にしておく
-        foreach (var block in hiddenGroundBlocks)
+        // もし既にボスを倒しているなら、最初から全て表示する
+        if (GameManager.instance != null && GameManager.instance.isBossDefeated)
         {
-            if (block != null)
+            foreach (var block in hiddenGroundBlocks)
             {
-                block.SetActive(false);
+                if (block != null) block.SetActive(true);
+            }
+        }
+        else
+        {
+            // まだ倒していないなら非表示
+            foreach (var block in hiddenGroundBlocks)
+            {
+                if (block != null) block.SetActive(false);
             }
         }
     }
 
     public void RevealGround()
     {
+        // ボスを倒したフラグを立てる
+        if (GameManager.instance != null) GameManager.instance.isBossDefeated = true;
         StartCoroutine(RevealSequence());
     }
 

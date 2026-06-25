@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fusuma : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class Fusuma : MonoBehaviour
     [Header("ぽんたの画像設定")]
     public Sprite backSprite;    // ぽんたの後ろ姿画像
     public Sprite frontSprite;   // ぽんたの前向き画像
+
+    [Header("シーン遷移設定")]
+    public bool useSceneTransition = false; // trueにするとシーン遷移
+    public string transitionSceneName = "01_Select";
 
     private SpriteRenderer fusumaRenderer;
     private bool isActivated = false;
@@ -126,68 +131,128 @@ public class Fusuma : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // 転送先のふすまへ移動
-        if (destinationFusuma != null)
+        if (useSceneTransition)
         {
-            Vector3 spawnPos = new Vector3(
-                destinationFusuma.position.x,
-                destinationFusuma.position.y + groundOffsetY,
-                player.transform.position.z);
+            // シーン遷移の場合
+            Debug.Log("シーン遷移を開始します: " + transitionSceneName);
 
-            player.transform.position = spawnPos;
-
-            // カメラを転送先に移動
-            Unity.Cinemachine.CinemachineCamera vcam =
-                FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
-            if (vcam != null)
+            // GameManagerのフラグをセット
+            if (GameManager.instance != null)
             {
-                vcam.ForceCameraPosition(
-                    new Vector3(
-                        spawnPos.x,
-                        spawnPos.y,
-                        vcam.transform.position.z),
-                    Quaternion.identity);
+                GameManager.instance.isComingFromGoal = true;
             }
 
-            // 転送先のふすまにクールタイムを設定
-            Fusuma destinationScript =
-                destinationFusuma.GetComponent<Fusuma>();
-            if (destinationScript != null)
-            {
-                destinationScript.StartCooldown(cooldownAfterArrival);
-            }
+            // フェードアウトさせてからシーンを読み込む
+            SceneManager.LoadScene(transitionSceneName);
+            yield break; // ここでコルーチンを完全に終了させる
         }
 
-        // ふすまを最初の画像に戻す 
-        if (fusumaSprites.Length > 0)
+        else if (destinationFusuma != null)
         {
-            fusumaRenderer.sprite = fusumaSprites[0];
+            // 同じシーン内でのワープの場合
+            WarpToDestination(playerAnim);
         }
-
-        yield return new WaitForSeconds(0.3f);
-
-        //// ぽんたの向きを必ず前向きにリセット 
-        //player.transform.localScale = new Vector3(
-        //    Mathf.Abs(player.transform.localScale.x),
-        //    player.transform.localScale.y,
-        //    player.transform.localScale.z);
-
-        // ぽんたの向きを必ず前向きにリセット
-        playerController.ResetFacing();
-
-        // ぽんたを前向き画像に変更
-        if (frontSprite != null && playerRenderer != null)
-        {
-            playerRenderer.sprite = frontSprite;
-        }
-
-        // ぽんたの操作を再開
-        playerController.enabled = true;
-
-        // キー入力があるまで前向き画像を固定
-        StartCoroutine(WaitForInput(playerAnim));
 
         isActivated = false;
+
+        //// 転送先のふすまへ移動
+        //if (destinationFusuma != null)
+        //{
+        //    Vector3 spawnPos = new Vector3(
+        //        destinationFusuma.position.x,
+        //        destinationFusuma.position.y + groundOffsetY,
+        //        player.transform.position.z);
+
+        //    player.transform.position = spawnPos;
+
+        //    // カメラを転送先に移動
+        //    Unity.Cinemachine.CinemachineCamera vcam =
+        //        FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+        //    if (vcam != null)
+        //    {
+        //        vcam.ForceCameraPosition(
+        //            new Vector3(
+        //                spawnPos.x,
+        //                spawnPos.y,
+        //                vcam.transform.position.z),
+        //            Quaternion.identity);
+        //    }
+
+        //    // 転送先のふすまにクールタイムを設定
+        //    Fusuma destinationScript =
+        //        destinationFusuma.GetComponent<Fusuma>();
+        //    if (destinationScript != null)
+        //    {
+        //        destinationScript.StartCooldown(cooldownAfterArrival);
+        //    }
+        //}
+
+        //// ふすまを最初の画像に戻す 
+        //if (fusumaSprites.Length > 0)
+        //{
+        //    fusumaRenderer.sprite = fusumaSprites[0];
+        //}
+
+        //yield return new WaitForSeconds(0.3f);
+
+        ////// ぽんたの向きを必ず前向きにリセット 
+        ////player.transform.localScale = new Vector3(
+        ////    Mathf.Abs(player.transform.localScale.x),
+        ////    player.transform.localScale.y,
+        ////    player.transform.localScale.z);
+
+        //// ぽんたの向きを必ず前向きにリセット
+        //playerController.ResetFacing();
+
+        //// ぽんたを前向き画像に変更
+        //if (frontSprite != null && playerRenderer != null)
+        //{
+        //    playerRenderer.sprite = frontSprite;
+        //}
+
+        //// ぽんたの操作を再開
+        //playerController.enabled = true;
+
+        //// キー入力があるまで前向き画像を固定
+        //StartCoroutine(WaitForInput(playerAnim));
+
+        //isActivated = false;
+
+        //// シーン遷移の場合
+        //if (useSceneTransition)
+        //{
+        //    yield return new WaitForSeconds(0.5f);
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene(transitionSceneName);
+        //    yield break;
+        //}
+    }
+
+    // シーン内ワープ用の処理を分離
+    void WarpToDestination(Animator playerAnim)
+    {
+        Vector3 spawnPos = new Vector3(
+            destinationFusuma.position.x,
+            destinationFusuma.position.y + groundOffsetY,
+            player.transform.position.z);
+
+        player.transform.position = spawnPos;
+
+        // カメラ強制移動
+        Unity.Cinemachine.CinemachineCamera vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+        if (vcam != null) vcam.ForceCameraPosition(new Vector3(spawnPos.x, spawnPos.y, vcam.transform.position.z), Quaternion.identity);
+
+        // クールタイム設定
+        Fusuma destScript = destinationFusuma.GetComponent<Fusuma>();
+        if (destScript != null) destScript.StartCooldown(cooldownAfterArrival);
+
+        // ふすまを閉じる
+        if (fusumaSprites.Length > 0) fusumaRenderer.sprite = fusumaSprites[0];
+
+        // ぽんたを前向きに戻して操作再開
+        playerController.ResetFacing();
+        if (frontSprite != null) playerRenderer.sprite = frontSprite;
+        playerController.enabled = true;
+        StartCoroutine(WaitForInput(playerAnim));
     }
 
     // 外部から呼び出すクールタイム開始メソッド
