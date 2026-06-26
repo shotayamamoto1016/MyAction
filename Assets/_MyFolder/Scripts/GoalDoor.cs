@@ -10,6 +10,7 @@ public class GoalDoor : MonoBehaviour
 
     [Header("シーン設定")]
     public string nextSceneName;        // 次のシーン名
+    public int currentStageNum = 1;     // このステージの番号
 
     [Header("停止時間設定")]
     public float stopDuration = 1.5f;   // 停止する時間
@@ -112,6 +113,17 @@ public class GoalDoor : MonoBehaviour
 
         // 少し待ってからシーン移行
         yield return new WaitForSeconds(0.5f);
+
+        // 現在の開放済みステージ数を読み込む
+        int savedStage = PlayerPrefs.GetInt("StageCleared", 1);
+
+        // もしクリアしたステージが、これまでの記録と同じなら次のステージを開放する
+        if (currentStageNum >= savedStage)
+        {
+            PlayerPrefs.SetInt("StageCleared", currentStageNum + 1);
+            PlayerPrefs.Save(); // 確実に保存
+            Debug.Log("次のステージを開放しました！ 現在の進行度: " + (currentStageNum + 1));
+        }
 
         // 次のステージの扉を表示するためにフラグを立てる
         if (GameManager.instance != null)

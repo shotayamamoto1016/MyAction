@@ -58,8 +58,8 @@ public class TitleManager : MonoBehaviour
     public void OnClickStartButton()
     {
         GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
-        // 02_Stage1 シーンを読み込む
-        SceneManager.LoadScene("02_Stage1");
+        // ステージ選択画面へ
+        SceneManager.LoadScene("01_Select");
     }
 
     // 設定ボタン

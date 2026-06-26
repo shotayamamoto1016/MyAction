@@ -2868,7 +2868,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.1232, y: 34}
+  m_AnchoredPosition: {x: 94, y: 40}
   m_SizeDelta: {x: 581.5328, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652274753
@@ -2891,7 +2891,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u672C\u5F53\u306B\u30BF\u30A4\u30C8\u30EB\u306B\u623B\u308A\u307E\u3059\u304B\uFF1F"
+  m_text: "\u672C\u5F53\u306B\u623B\u308A\u307E\u3059\u304B\uFF1F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31ae891e324dfe74b843d24c45cb6841, type: 2}
   m_sharedMaterial: {fileID: 35213295701915587, guid: 31ae891e324dfe74b843d24c45cb6841, type: 2}
@@ -2918,8 +2918,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3472,7 +3472,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30BF\u30A4\u30C8\u30EB\u3078\u623B\u308B"
+  m_text: "\u5DFB\u7269\u3092\u78BA\u8A8D\u3059\u308B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31ae891e324dfe74b843d24c45cb6841, type: 2}
   m_sharedMaterial: {fileID: 35213295701915587, guid: 31ae891e324dfe74b843d24c45cb6841, type: 2}
@@ -4559,6 +4559,7 @@ MonoBehaviour:
   - {fileID: -2076124236937892953, guid: 0e872bd424a5cbe40845f1c709e30bab, type: 3}
   doorAnimInterval: 0.1
   nextSceneName: 06_Stage5
+  currentStageNum: 4
   stopDuration: 1.5
   backSprite: {fileID: -1088195992, guid: bafc59a3fe9657040b77c09054e72f6a, type: 3}
 --- !u!61 &1183211222
@@ -5213,7 +5214,9 @@ MonoBehaviour:
   lifeUI: {fileID: 517399235}
   vcam: {fileID: 510204609}
   cameraVerticalOffset: 3.85
+  isBossDefeated: 0
   isComingFromGoal: 0
+  nextRespawnScene: 
   seSounds:
   - Name: Block_Break
     Clip: {fileID: 8300000, guid: 6bbc908376853e340bb7228f31a2afd2, type: 3}

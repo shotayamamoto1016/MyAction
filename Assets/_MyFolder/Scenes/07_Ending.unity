@@ -7988,6 +7988,7 @@ MonoBehaviour:
   - {fileID: -2076124236937892953, guid: 0e872bd424a5cbe40845f1c709e30bab, type: 3}
   doorAnimInterval: 0.1
   nextSceneName: 06_Stage5
+  currentStageNum: 1
   stopDuration: 1.5
   backSprite: {fileID: -1088195992, guid: bafc59a3fe9657040b77c09054e72f6a, type: 3}
 --- !u!61 &410073110
@@ -15729,6 +15730,7 @@ MonoBehaviour:
   - {fileID: -2076124236937892953, guid: 0e872bd424a5cbe40845f1c709e30bab, type: 3}
   doorAnimInterval: 0.1
   nextSceneName: 03_Stage2
+  currentStageNum: 1
   stopDuration: 1.5
   backSprite: {fileID: -1088195992, guid: bafc59a3fe9657040b77c09054e72f6a, type: 3}
 --- !u!61 &864231893
