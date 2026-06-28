@@ -98,6 +98,10 @@ public class GameManager : MonoBehaviour
     // シーンが読み込まれた直後に呼ばれる
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // シーンロード時にvcamを再取得 
+        vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+        Debug.Log("シーンロード時vcam再取得: " + vcam);
+
         if (scene.name == "02_Stage1" || scene.name == "03_Stage2" || scene.name == "04_Stage3" || scene.name == "05_Stage4" || scene.name == "06_Stage5")
         {
             PlayStageBGM();
@@ -250,11 +254,21 @@ public class GameManager : MonoBehaviour
     IEnumerator ResetCamera(Transform playerTransform, Vector3 targetPos)
     {
         Debug.Log("ResetCamera開始。targetPos: " + targetPos);
+
+        // vcamがnullの場合はシーン内から再取得 
         if (vcam == null)
         {
+            vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+            Debug.Log("vcamを再取得: " + vcam);
+        }
+
+        if (vcam == null)
+        {
+            Debug.LogError("vcamが見つかりません！");
             StartCoroutine(Fade(0));
             yield break;
         }
+
 
         // Followを一度外す
         vcam.Follow = null;

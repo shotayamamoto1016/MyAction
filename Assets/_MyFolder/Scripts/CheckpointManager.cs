@@ -8,11 +8,9 @@ public class CheckpointManager : MonoBehaviour
     private Vector3 checkpointPosition;
     private bool hasCheckpoint = false;
 
-    // 倒したうらめし提灯のIDを記録
-    private HashSet<int> defeatedChochinIds = new HashSet<int>();
-
-    // チェックポイント通過時の提灯のIDを記録
-    private HashSet<int> chochinIdsAtCheckpoint = new HashSet<int>();
+    // 座標で記録する
+    private HashSet<Vector3> defeatedChochinPositions = new HashSet<Vector3>();
+    private HashSet<Vector3> positionsAtCheckpoint = new HashSet<Vector3>();
 
     private bool isBossCheckpoint = false;
 
@@ -34,8 +32,8 @@ public class CheckpointManager : MonoBehaviour
     {
         checkpointPosition = position;
         hasCheckpoint = true;
-        isBossCheckpoint = isBoss; 
-        chochinIdsAtCheckpoint = new HashSet<int>(defeatedChochinIds);
+        isBossCheckpoint = isBoss;
+        positionsAtCheckpoint = new HashSet<Vector3>(defeatedChochinPositions);
     }
 
     public bool IsBossCheckpoint()
@@ -55,24 +53,23 @@ public class CheckpointManager : MonoBehaviour
         return checkpointPosition;
     }
 
-    // うらめし提灯が倒された時に呼ばれる
-    public void RegisterDefeatedChochin(int id)
+    // 提灯が倒された時に座標を登録
+    public void RegisterDefeatedChochin(Vector3 pos)
     {
-        defeatedChochinIds.Add(id);
+        defeatedChochinPositions.Add(pos);
     }
 
     // うらめし提灯が倒されているか確認
-    public bool IsChochinDefeated(int id)
+    public bool IsChochinDefeated(Vector3 pos)
     {
-        // チェックポイント通過時点で倒済みのIDのみtrue
-        return chochinIdsAtCheckpoint.Contains(id);
+        return positionsAtCheckpoint.Contains(pos);
     }
 
     // チェックポイントをリセット
     public void ResetCheckpoint()
     {
         hasCheckpoint = false;
-        defeatedChochinIds.Clear();
-        chochinIdsAtCheckpoint.Clear();
+        defeatedChochinPositions.Clear();
+        positionsAtCheckpoint.Clear();
     }
 }

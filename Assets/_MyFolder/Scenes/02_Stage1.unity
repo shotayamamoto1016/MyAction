@@ -92276,7 +92276,7 @@ RectTransform:
   m_GameObject: {fileID: 749235112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 591570508}
@@ -92876,6 +92876,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (37)
@@ -94593,7 +94597,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 3, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.9, z: 1}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -95035,6 +95039,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (32)
@@ -95128,6 +95136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (33)
@@ -95481,6 +95493,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2933073671943928588, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6214326563617418721, guid: 9d7ad6e9a4cd19144a13cebdf6d88ad0, type: 3}
       propertyPath: m_Name
       value: BreakBlock (38)
@@ -97460,7 +97476,7 @@ RectTransform:
   m_GameObject: {fileID: 1941983980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 167075699}

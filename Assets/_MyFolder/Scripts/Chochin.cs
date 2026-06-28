@@ -159,6 +159,13 @@ public class Chochin : MonoBehaviour, IResettable
     IEnumerator AscendAnimation()
     {
         isDead = true;
+
+        // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‘Ò‚½‚¸‚ÉA“|‚³‚ê‚½uŠÔ‚ÉÀ•W‚ğ“o˜^‚·‚é
+        if (CheckpointManager.instance != null)
+        {
+            CheckpointManager.instance.RegisterDefeatedChochin(startPosition);
+        }
+
         GSound.Instance.PlaySe(SoundData.SeType.Enemy_Chouchin.ToString());
         GetComponent<Collider2D>().enabled = false;
         transform.rotation = Quaternion.identity;
@@ -170,16 +177,23 @@ public class Chochin : MonoBehaviour, IResettable
         }
         yield return new WaitForSeconds(0.5f);
 
-        // CheckpointManager‚É“o˜^ 
-        if (CheckpointManager.instance != null)
-        {
-            CheckpointManager.instance.RegisterDefeatedChochin(
-                gameObject.GetInstanceID());
-        }
+        //// CheckpointManager‚É“o˜^ 
+        //if (CheckpointManager.instance != null)
+        //{
+        //    CheckpointManager.instance.RegisterDefeatedChochin(
+        //        gameObject.GetInstanceID());
+        //}
 
         // Destroy‚Ì‘ã‚í‚è‚É”ñ•\¦
         gameObject.SetActive(false);
     }
+
+    // ŒöŠJ—p‚Ì‰ŠúÀ•Wæ“¾ƒvƒƒpƒeƒB
+    public Vector3 GetStartPosition()
+    { 
+        return startPosition;
+    }
+
 
     // “|‚³‚ê‚½‚ÉCheckpointManager‚É“o˜^
     //void OnDestroy()

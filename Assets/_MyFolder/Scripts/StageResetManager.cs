@@ -33,12 +33,12 @@ public class StageResetManager : MonoBehaviour
             FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var chochin in chochins)
         {
+            // 初期座標を使ってチェックポイント時に死んでいたかを確認
             if (CheckpointManager.instance != null &&
-                CheckpointManager.instance.IsChochinDefeated(
-                    chochin.GetInstanceID()))
+                CheckpointManager.instance.IsChochinDefeated(chochin.GetStartPosition()))
             {
-                // チェックポイント通過前に倒済み(復活させない)
-                Destroy(chochin.gameObject);
+                // チェックポイント以前に倒されていたなら消したままにする
+                chochin.gameObject.SetActive(false);
             }
             else
             {
