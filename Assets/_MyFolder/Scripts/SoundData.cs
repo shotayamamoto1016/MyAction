@@ -12,6 +12,8 @@ public class SoundData : ScriptableObject
         Title,
         Start,
         Boss,
+        Endhing,
+        Item_Gorlden,
     }
 
     //SE’è‹`
@@ -27,7 +29,8 @@ public class SoundData : ScriptableObject
         Enemy_Takenoko,    
         Item_Freeze,       
         Item_Poison,       
-        Item_Confuse
+        Item_Confuse,
+        Die,
     }
 
     //BGM‚ğŠÇ—‚·‚éƒNƒ‰ƒX

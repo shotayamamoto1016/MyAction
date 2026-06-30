@@ -42,8 +42,8 @@ public class PauseManager : MonoBehaviour
         if (!menuButton.activeSelf) return;
 
 
-        // Escキーでもポーズの開閉ができるように
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // EscキーやPキーでもポーズの開閉ができるようにする
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             if (isPaused) Resume();
             else PressMenuButton();
@@ -105,7 +105,7 @@ public class PauseManager : MonoBehaviour
 
     
 
-    // 「タイトルへ戻る」ボタンを押した時
+    // 「巻物を確認する」ボタンを押した時
     public void PressReturnTitle()
     {
         GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
@@ -127,6 +127,6 @@ public class PauseManager : MonoBehaviour
     {
         GSound.Instance.PlaySe(SoundData.SeType.Button_Click.ToString());
         Time.timeScale = 1f; // 時間を戻してからシーン移動
-        SceneManager.LoadScene("00_Title"); // タイトルのシーン名に合わせて変更
+        SceneManager.LoadScene("01_Select"); 
     }
 }

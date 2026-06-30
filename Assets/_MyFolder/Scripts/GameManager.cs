@@ -107,12 +107,18 @@ public class GameManager : MonoBehaviour
             PlayStageBGM();
         }
 
+        else if (scene.name == "07_Ending")
+        {
+            // エンディングBGMを再生
+            PlayEndingBGM();
+        }
+
         //最初のゲーム開始時は何もしない
         if (isFirstLoad)
         {
             if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0;
             if (lifeUI != null) lifeUI.SetActive(false);
-            isFirstLoad = false; // 次からは「死んだ後のリロード」として扱う
+            isFirstLoad = false; 
             return;
         }
 
@@ -340,5 +346,11 @@ public class GameManager : MonoBehaviour
         GSound.Instance.PlayBgm(bgmName, true);
     }
 
-
+    //エンディングBGMを再生するための関数
+    public void PlayEndingBGM()
+    {
+        // SoundData.BgmType.Ending は定義済みである前提
+        string bgmName = SoundData.BgmType.Endhing.ToString();
+        GSound.Instance.PlayBgm(bgmName, true);
+    }
 }

@@ -43,7 +43,7 @@ public class BreakBlock : MonoBehaviour, IResettable
                 if (contact.normal.y > 0.5f)
                 {
                     isBroken = true;
-                    GSound.Instance.PlaySe(SoundData.SeType.Block_Break.ToString());
+                    GSound.Instance.PlaySe(SoundData.SeType.Block_Break.ToString(), 1.5f);
                     SpawnFragments();
                     gameObject.SetActive(false); // Destroy‚Ì‘ã‚í‚è‚É”ñ•\Ž¦
                     break;

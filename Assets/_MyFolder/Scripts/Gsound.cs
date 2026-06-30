@@ -41,7 +41,8 @@ public class GSound
     public float seVolume = 1.0f;
 
     //SE同時防止キュー
-    Queue<string> seQueue = new Queue<string>();
+    //Queue<string> seQueue = new Queue<string>();
+    Queue<SeRequest> seQueue = new Queue<SeRequest>();
 
     //最大SE同時発生数
     int maxSeCount = 10;
@@ -135,7 +136,7 @@ public class GSound
     }
 
     //SEの再生
-    public bool PlaySe(string fileName)
+    public bool PlaySe(string fileName, float volumeScale = 1.0f)
     {
         //指定フィアルがない
         if (poolSe.ContainsKey(fileName) == false) return false;
@@ -147,18 +148,14 @@ public class GSound
             if (sameSeCheck)
             {
                 //同じSEがキュー内にある場合は登録しない
-                if (!seQueue.Contains(fileName))
+                foreach (var req in seQueue)
                 {
-                    seQueue.Enqueue(fileName);
-                    return true;
+                    if (req.name == fileName) return true;
                 }
 
             }
-            else
-            {
-                seQueue.Enqueue(fileName);
-                return true;
-            }
+            // 名前と音量倍率をセットで入れる
+            seQueue.Enqueue(new SeRequest { name = fileName, volume = volumeScale });
         }
 
         return true;
@@ -168,19 +165,14 @@ public class GSound
     //1フレームに1回呼ばれたキューは消化する
     public void CheckSeQueue()
     {
-        //SEキューにデータがあれば一つだけ取り出して処理する
         if (seQueue.Count > 0)
         {
-            //リソースの取得
             AudioSource source = GetAudioSource(Type.se);
+            SeRequest request = seQueue.Dequeue(); 
 
-            AudioClip clip = poolSe[seQueue.Dequeue()];
+            AudioClip clip = poolSe[request.name];
 
-            //音量設定
-            source.volume = seVolume;
-
-            //再生
-            source.PlayOneShot(clip);
+            source.PlayOneShot(clip, seVolume * request.volume);
         }
     }
 
@@ -207,5 +199,11 @@ public class GSound
     public void seVolumeChange(float volume)
     {
         seVolume = volume;
+    }
+
+    struct SeRequest
+    {
+        public string name;
+        public float volume;
     }
 }

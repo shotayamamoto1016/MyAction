@@ -131,9 +131,11 @@ public class PlayerController : MonoBehaviour
         if (moveInput > 0 && !facingRight) Flip();
         else if (moveInput < 0 && facingRight) Flip();
 
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && Input.GetButtonDown("Jump") || isGrounded && Input.GetKeyDown(KeyCode.J) || isGrounded && Input.GetKeyDown(KeyCode.W))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+            isGrounded = false;
         }
     }
 
@@ -169,6 +171,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator DeathAnimation()
     {
         isDead = true;
+
+        // 死亡SEを再生
+        GSound.Instance.PlaySe(SoundData.SeType.Die.ToString(), 0.25f);
 
         // 画像を死んだ時のものに変える
         if (deathSprite != null)
@@ -317,6 +322,9 @@ public class PlayerController : MonoBehaviour
         // 凍った状態で待機
         yield return new WaitForSeconds(freezeDuration);
 
+        // 死亡SEを再生
+        //GSound.Instance.PlaySe(SoundData.SeType.Die.ToString());
+
         // 死亡画像に変更
         if (deathSprite != null)
         {
@@ -450,6 +458,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator InvincibilityRoutine()
     {
+        // 無敵BGMを再生
+        GSound.Instance.PlayBgm(SoundData.BgmType.Item_Gorlden.ToString(), true);
+
         isInvincible = true;
         moveSpeed = 6.0f;
         jumpForce = 17.5f;
@@ -480,7 +491,11 @@ public class PlayerController : MonoBehaviour
         // 終了処理
         StopInvincibilityManually();
 
-        
+        // ステージBGMに戻す
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.PlayStageBGM();
+        }
     }
 
     // 無敵を強制終了させるメソッド
