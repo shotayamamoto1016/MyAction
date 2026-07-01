@@ -95,18 +95,111 @@
 ## 📂 プロジェクト構成
 
 ```
-Assets/
-└── _MyFolder/
-    ├── Scripts/       # C#スクリプト一式
-    ├── Prefabs/       # プレハブ
-    │   ├── Enemys/    # 敵プレハブ
-    │   └── Items/     # アイテムプレハブ
-    ├── Sprites/       # キャラクター・背景画像
-    ├── Scenes/        # 各シーンファイル
-    └── Sounds/        # BGM・SE
-        ├── BGM/
-        └── SE/
+MyAction/
+├── Assets/
+│   └── _MyFolder/
+│       ├── Scripts/                    # C#スクリプト一式
+│       │   ├── PlayerController.cs     # ぽんたの移動・ジャンプ・状態管理
+│       │   ├── GameManager.cs          # ライフ管理・フェード・リスポーン
+│       │   ├── CheckpointManager.cs    # チェックポイント座標・提灯撃破記録
+│       │   ├── StageResetManager.cs    # チェックポイント復活時のリセット管理
+│       │   ├── PauseManager.cs         # ポーズ・タイムスケール管理
+│       │   ├── GSound.cs               # BGM・SE管理（シングルトン）
+│       │   ├── IResettable.cs          # リセット用インターフェース
+│       │   ├── GoalDoor.cs             # ゴール扉・シーン遷移
+│       │   ├── Fusuma.cs               # ふすま（同シーン内転送・シーン遷移）
+│       │   ├── CheckpointFlag.cs       # チェックポイント旗
+│       │   │
+│       │   ├── Blocks/                 # ブロック系スクリプト
+│       │   │   ├── CrumbleBlock.cs     # 崩れるブロック（復活あり）
+│       │   │   ├── CollapseBlock.cs    # 崩れるブロック（復活なし・破片あり）
+│       │   │   ├── BreakBlock.cs       # 頭突きで壊れるブロック
+│       │   │   ├── HatenaBlock.cs      # ハテナブロック（茶色に変化）
+│       │   │   ├── ItemBlock.cs        # アイテムブロック（キノコ出現）
+│       │   │   ├── HiddenBlock.cs      # 隠しブロック
+│       │   │   └── SpikeTrap.cs        # トゲトラップ（ボス戦エリア）
+│       │   │
+│       │   ├── Items/                  # アイテム系スクリプト
+│       │   │   ├── GoldenMushroom.cs   # 金色キノコ（無敵）
+│       │   │   ├── FreezeMushroomItem.cs   # 氷キノコ（即死）
+│       │   │   ├── PoisonMushroomItem.cs   # 毒キノコ（即死）
+│       │   │   └── ConfusedMushroomItem.cs # 混乱キノコ（20秒間左右反転）
+│       │   │
+│       │   ├── Enemys/                 # 敵スクリプト
+│       │   │   ├── Koromochi.cs        # ころもち
+│       │   │   ├── KoromochiLeft.cs    # 土管用ころもち（左のみ移動）
+│       │   │   ├── Chochin.cs          # うらめし提灯
+│       │   │   ├── TakenokoSniper.cs   # 竹の子スナイパー
+│       │   │   ├── TakenokoBullet.cs   # 竹の子スナイパーの弾
+│       │   │   ├── NokkariIshi.cs      # のっかり石
+│       │   │   ├── TsuraraBoy.cs       # つらら小僧
+│       │   │   ├── OtasukeTurtle.cs    # お助けガメ
+│       │   │   ├── FireCrow.cs         # 火吹き鴉
+│       │   │   ├── CrowFireball.cs     # 火吹き鴉の炎
+│       │   │   ├── IttanHirari.cs      # 一反ひらり
+│       │   │   ├── KageBoshi.cs        # 影法師
+│       │   │   ├── MakikomiFrog.cs     # マキコミガエル
+│       │   │   ├── LavaMocchi.cs       # 溶岩もっち
+│       │   │   ├── BakuenDaruma.cs     # 爆炎だるま
+│       │   │   ├── BakuenFlame.cs      # 爆炎だるまの炎
+│       │   │   └── MochiTenBoss.cs     # ラスボス もち天さま
+│       │   │
+│       │   ├── Gimmicks/               # ギミック系スクリプト
+│       │   │   ├── DokanSpawner.cs     # 土管スポーナー
+│       │   │   ├── DokanBlock.cs       # 土管ON/OFFブロック
+│       │   │   ├── BossStageGroundManager.cs # ボス戦地面管理
+│       │   │   ├── BossTriggerZone.cs  # ボス戦トリガー
+│       │   │   ├── FrogDefeatWall.cs   # カエル撃破後の壁崩壊
+│       │   │   ├── PostBossGroundReveal.cs # ボス撃破後の地面出現
+│       │   │   ├── EndingSpikeWall.cs  # エンディングのとげ壁
+│       │   │   └── EndingBreakBlock.cs # エンディングの崩壊ブロック
+│       │   │
+│       │   └── Utils/                  # ユーティリティ
+│       │       └── CoroutineRunner.cs  # 非アクティブオブジェクト用コルーチン実行
+│       │
+│       ├── Prefabs/                    # プレハブ一式
+│       │   ├── Enemys/                 # 敵プレハブ
+│       │   └── Items/                  # アイテムプレハブ
+│       │
+│       ├── Sprites/                    # 画像素材（Google AI生成）
+│       │   ├── Player/                 # ぽんた関連
+│       │   ├── Enemys/                 # 敵キャラクター
+│       │   ├── Blocks/                 # ブロック
+│       │   ├── Items/                  # アイテム
+│       │   └── Backgrounds/            # 背景
+│       │
+│       ├── Scenes/                     # シーンファイル
+│       │   ├── 00_Title.unity
+│       │   ├── 01_Select.unity
+│       │   ├── 02_Stage1.unity
+│       │   ├── 03_Stage2.unity
+│       │   ├── 04_Stage3.unity
+│       │   ├── 05_Stage4.unity
+│       │   ├── 06_Stage5.unity
+│       │   └── 07_Ending.unity
+│       │
+│       ├── Sounds/                     # サウンド素材
+│       │   ├── BGM/
+│       │   │   ├── Start.mp3           # 通常ステージBGM
+│       │   │   ├── Title.mp3           # タイトル画面BGM
+│       │   │   ├── item_Gorden.mp3           # 金色キノコBGM
+│       │   │   ├── Boss.mp3           # ボス戦BGM
+│       │   │   └── Endhing.mp3            # エンディング画面BGM
+│       │   └── SE/                     # 効果音
+│       │
+│       └── TilePalette/                # タイルパレット
+│
+├── Packages/
+├── ProjectSettings/
+└── README.md
 ```
+
+---
+
+## 🎨 素材について
+
+- キャラクター・敵・背景画像：Google AI（Gemini）で生成
+- BGM・SE：フリー素材を使用
 
 ---
 
@@ -117,13 +210,16 @@ Assets/
 
 ---
 
+## 📝 詳細記事
+
+開発で工夫した点・難しかった点などの詳細はQiitaにまとめています。
+
+👉 [ゲーム開発ポートフォリオ(ぽんたのワナワナアドベンチャー) - Qiita](https://qiita.com/shota20041016)
+
+---
+
 ## 👤 開発者
 
-| 項目 | 内容 |
-|------|------|
-| 開発者 | 山本翔太（shotayamamoto1016） |
-| 開発期間 | 約1ヶ月半 |
-| GitHub | https://github.com/shotayamamoto1016 |
-| Qiita | https://qiita.com/shota20041016 |
+- **GitHub**：[shotayamamoto1016](https://github.com/shotayamamoto1016)
 
 ---
