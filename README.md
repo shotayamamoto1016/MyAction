@@ -8,7 +8,7 @@
 
 ## 🎮 ゲームURL
 
-▶️ [Unityroomでプレイする]((https://unityroom.com/games/sypwa_029187))
+▶️ [Unityroomでプレイする](https://unityroom.com/games/sypwa_029187)
 
 ---
 
@@ -214,7 +214,7 @@ MyAction/
 
 開発で工夫した点・難しかった点などの詳細はQiitaにまとめています。
 
-👉 [ゲーム開発ポートフォリオ(ぽんたのワナワナアドベンチャー) - Qiita](https://qiita.com/shota20041016)
+👉 [ゲーム開発ポートフォリオ(ぽんたのワナワナアドベンチャー) - Qiita](https://qiita.com/shota20041016/items/fa95a14ecafbff5e6940)
 
 ---
 
